@@ -9,22 +9,32 @@ signal_exit_memtest() {
 }
 
 params=("$@")
+
 [ ! -d /var/lib/memtester ] && mkdir -p /var/lib/memtester
+
 rm -f /var/lib/memtester/laststart
 rm -f /var/lib/memtester/lastfinish
+
 date +"%d.%m.%Y %H:%M:%S %Z" > /var/lib/memtester/laststart
+
 trap signal_exit_memtest SIGTERM SIGINT 
+
 echo ">> /usr/bin/memtester ${params[*]:1}" | tee /var/lib/memtester/log
 echo "" | tee -a /var/lib/memtester/log
 echo ">> /usr/bin/memtester ${params[*]:1}" | tee /var/lib/memtester/errlog
 echo "" | tee -a /var/lib/memtester/errlog
+
 if [ "${params[0]}" == "1" ]; then
+    echo "Detailed error output was disabled, see regular output for testing summaries." | tee -a /var/lib/memtester/errlog
     /usr/bin/memtester "${params[@]:1}" 1>>/var/lib/memtester/log 2>>/var/lib/memtester/errlog
     CMDRET=${PIPESTATUS[0]}
 else
+    echo "Detailed error output was enabled, this is NOT RECOMMENDED." | tee -a /var/lib/memtester/errlog
+    echo "" | tee -a /var/lib/memtester/errlog
     /usr/bin/memtester "${params[@]:1}" 1>>/var/lib/memtester/log 2>/dev/null
     CMDRET=${PIPESTATUS[0]}
 fi
+
 if [ "$CMDRET" -eq 0 ]; then
     printf "\nThe operation has finished without errors (return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/log
     printf "\nThe operation has finished without errors (return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/errlog
@@ -40,10 +50,10 @@ elif [ "$CMDRET" -eq 4 ]; then
 elif [ "$CMDRET" -eq 6 ]; then
     printf "\nThe operation has finished with errors (error during stuck address test + other test(s) / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/log
     printf "\nThe operation has finished with errors (error during stuck address test + other test(s) / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/errlog
-
 else
     printf "\nThe operation has finished with errors (check operation output / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/log
     printf "\nThe operation has finished with errors (check operation output / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/errlog
 fi
+
 date +"%d.%m.%Y %H:%M:%S %Z" > /var/lib/memtester/lastfinish
 exit 0

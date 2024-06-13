@@ -6,10 +6,40 @@ Tag="microchip"
 Markdown="false"
 ---
 <?
+function humanFileSize($sizeObj,$unit="") {
+    try {
+        $size = intval($sizeObj);
+        if($size) {
+            if( (!$unit && $size >= 1<<40) || $unit == "TB")
+                return number_format($size/(1<<40),2)." TB";
+            if( (!$unit && $size >= 1<<30) || $unit == "GB")
+                return number_format($size/(1<<30),2)." GB";
+            if( (!$unit && $size >= 1<<20) || $unit == "MB")
+                return number_format($size/(1<<20),2)." MB";
+            if( (!$unit && $size >= 1<<10) || $unit == "KB")
+                return number_format($size/(1<<10),2)." KB";
+            return number_format($size)." B";
+        } else {
+            return "-";
+        }
+    } catch (Throwable $e) { // For PHP 7
+        return "-";
+    } catch (Exception $e) { // For PHP 5
+        return "-";
+    }
+}
+
 $memlaststart = trim(file_exists("/var/lib/memtester/laststart") ? htmlspecialchars(file_get_contents("/var/lib/memtester/laststart")) : "-");
 $memlastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecialchars(file_get_contents("/var/lib/memtester/lastfinish")) : "-");
-$memlog_size = trim(file_exists("/var/lib/memtester/log") ? htmlspecialchars(filesize("/var/lib/memtester/log")) : "-");
-$errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialchars(filesize("/var/lib/memtester/errlog")) : "-");
+$memlog_size = trim(file_exists("/var/lib/memtester/log") ? htmlspecialchars(humanFileSize(filesize("/var/lib/memtester/log"))) : "-");
+$errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialchars(humanFileSize(filesize("/var/lib/memtester/errlog"))) : "-");
+
+$mem_highram_html = "";
+$mem_disk_util = trim(htmlspecialchars(shell_exec("df --output=pcent /var/lib/memtester 2>/dev/null | tr -dc '0-9' 2>/dev/null") ?? "-"));
+if($mem_disk_util !== "-") {
+    $mem_highram_html = ($mem_disk_util < 90) ? "" : "<span style='margin-right:10px;color:red;'><i class='fa fa-exclamation-triangle'></i> <strong>RAM Disk > 90% (No More Output Possible)</strong></span>";
+}
+
 ?>
 
 <style type="text/css">
@@ -48,14 +78,14 @@ $errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialchars(
 </tr>
 <tr>
 <th><strong>REGULAR OUTPUT (STDOUT)</strong></th>
-<th style="text-transform: none;"><span style="float:right;"><strong>File Size:</strong> <?=$memlog_size;?> bytes</span></th>
+<th style="text-transform: none;"><span style="float:right;"><?=$mem_highram_html;?><strong>File Size (Static):</strong> <?=$memlog_size;?></span></th>
 <th><strong>ERROR OUTPUT (STDERR)</strong></th>
-<th style="text-transform: none;"><span style="float:right;"><strong>File Size:</strong> <?=$errlog_size;?> bytes</span></th>
+<th style="text-transform: none;"><span style="float:right;"><?=$mem_highram_html;?><strong>File Size (Static):</strong> <?=$errlog_size;?></span></th>
 </tr>
 <tbody>
 <tr>
-<td colspan="2"><span id="memlogviewer"><div style="text-align:center;"><i class="fa fa-spinner fa-spin"></i> <em>Please wait, retrieving information...</em></div></span></td>
-<td colspan="2"><span id="errlogviewer"><div style="text-align:center;"><i class="fa fa-spinner fa-spin"></i> <em>Please wait, retrieving information...</em></div></span></td>
+<td colspan="2"><span id="memlogviewer"><div style="text-align:center;"><i class="fa fa-spinner fa-spin"></i> <em>Please wait, retrieving information...</em><br><em>Note: If this panel does not load, there's too many lines to display.</em></div></span></td>
+<td colspan="2"><span id="errlogviewer"><div style="text-align:center;"><i class="fa fa-spinner fa-spin"></i> <em>Please wait, retrieving information...</em><br><em>Note: If this panel does not load, there's too many lines to display.</em></div></span></td>
 </tr>
 </tbody>
 </table>
@@ -74,14 +104,14 @@ $errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialchars(
     <input type="text" class="memrun" id="memhex" placeholder="(optional) hex starting point" value="">
     <input type="text" class="memrun" id="memtarget" placeholder="(optional) target device" value="">
 
-    <input type="checkbox" id="memerrs" value="memerrs">
-    <label for="memerrs">Write Detailed Errors (Not Recommended)</label>    
-
     <span style="float:right;">
         <input type="button" class="memrun" id="memclear" value="Clear Logs">
         <input type="button" class="memnotrun" id="memstop" value="Stop Operation">
         <input type="button" class="memnotrun" id="memkill" value="Kill Operation">
     </span><br>
+
+    <input type="checkbox" id="memerrs" value="memerrs">
+    <label for="memerrs">Write Detailed Error Output (<strong>Not Recommended</strong> - Recording Huge Amounts of Errors May Exceed Available RAM)</label>   
 
 </form>
 
