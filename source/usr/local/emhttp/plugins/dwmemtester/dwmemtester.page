@@ -31,6 +31,9 @@ $memlastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecial
     word-wrap: normal !important;
     white-space: pre !important;
 }
+.logtable {
+    table-layout: fixed;
+}
 </style>
 
 <table class="tablesorter shift" autofocus>
@@ -45,7 +48,7 @@ $memlastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecial
 
 <br>
 
-<table class="tablesorter shift">
+<table class="tablesorter shift logtable">
 <thead>
 <tr>
 <th><strong>REGULAR OUTPUT (STDOUT)</strong></th>
