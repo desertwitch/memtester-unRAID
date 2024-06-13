@@ -1,0 +1,74 @@
+<?xml version='1.0' standalone='yes'?>
+
+<!DOCTYPE PLUGIN [
+<!ENTITY name      "dwmemtester">
+<!ENTITY author    "desertwitch">
+<!ENTITY version   "2024.06.13">
+<!ENTITY launch    "Settings/libcheck">
+<!ENTITY gitURL    "https://raw.githubusercontent.com/&author;/memtester-unRAID/main">
+<!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
+<!ENTITY pkgURL    "&gitURL;/packages">
+<!ENTITY plgPATH   "/boot/config/plugins/&name;">
+<!ENTITY plgNAME   "libcheck-2024.05.17-x86_64-1">
+<!ENTITY plgMD5    "27a4d2468b1cca753d7b0b2d11b48a65">
+<!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
+]>
+
+<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" Min="6.8.3" icon="cubes">
+
+<CHANGES>
+## memtester for UNRAID
+###2024.06.13
+- release note: first version of the package
+</CHANGES>
+
+<!--
+install or upgrade dependency files
+-->
+<FILE Name="&plgPATH;/memtester-4.6.0_1-x86_64-1_dw.txz" Min="6.8.3" Run="upgradepkg --install-new">
+<URL>&pkgURL;/memtester-4.6.0_1-x86_64-1_dw.txz</URL>
+<MD5>ae0e2477b0083382d032d9840d474c5d</MD5>
+</FILE>
+
+
+<!--
+install or upgrade the plugin itself
+-->
+<FILE Name="&plgPATH;/&plgNAME;.txz" Min="6.8.3" Run="upgradepkg --install-new">
+<URL>&gitURL;/archive/&plgNAME;.txz</URL>
+<MD5>&plgMD5;</MD5>
+</FILE>
+
+<!--
+run the post-installation scripts
+-->
+<FILE Run="/bin/bash">
+<INLINE> 
+echo ""
+echo "-----------------------------------------------------------"
+echo " memtester for UNRAID has been removed."
+echo " Version: &version; / Plugin Maintainer: &author;"
+echo "-----------------------------------------------------------"
+echo ""
+</INLINE>
+</FILE>
+
+<!--
+definition for uninstallation of the plugin
+-->
+<FILE Run="/bin/bash" Method="remove">
+<INLINE>
+removepkg &plgPATH;/*.txz
+rm -rf &plgPATH;
+rm -rf &emhttp;
+
+echo ""
+echo "-----------------------------------------------------------"
+echo " memtester for UNRAID has been removed."
+echo " Version: &version; / Plugin Maintainer: &author;"
+echo "-----------------------------------------------------------"
+echo ""
+</INLINE>
+</FILE>
+
+</PLUGIN>

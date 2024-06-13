@@ -1,0 +1,4 @@
+#!/bin/bash
+params=("$@")
+mkdir -p /var/log/memtester
+/usr/bin/memtester "${params[@]}" 2>&1 | tee /var/log/memtester/log
