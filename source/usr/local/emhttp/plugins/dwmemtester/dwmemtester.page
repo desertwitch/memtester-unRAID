@@ -74,7 +74,7 @@ if($mem_disk_util !== "-") {
 <th><i id="memstatusicon" class="fa fa-cog fa-spin" style="display:none;"></i> <strong>Operation Screen</strong></th>
 <th style="text-transform: none;"><span style="float:right;"><strong>Started:</strong> <em><?=$memlaststart?></em></span></th>
 <th style="text-transform: none;"><strong>Finished:</strong> <em><?=$memlastfinish?></em></th>
-<th style="text-transform: none;"><span style="float:right;"><strong>Refresh:</strong> <i id="memlogcontrol" class="fa fa-refresh fa-spin"></i></span></th>
+<th style="text-transform: none;"><span style="float:right;"><strong>Output Refresh:</strong> <i id="memlogcontrol" class="fa fa-refresh fa-spin"></i></span></th>
 </tr>
 <tr>
 <th><strong>SUMMARY OUTPUT (STDOUT)</strong></th>
