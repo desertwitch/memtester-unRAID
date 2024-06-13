@@ -19,14 +19,6 @@ $memlastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecial
     word-wrap: normal !important;
     white-space: pre !important;
 }
-.errlog {
-    height: 225px;
-    max-height: 225px;
-    overflow: auto;
-    word-break: normal !important;
-    word-wrap: normal !important;
-    white-space: pre !important;
-}
 </style>
 
 <table class="tablesorter shift" autofocus>
@@ -34,7 +26,7 @@ $memlastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecial
         <tr>
             <th><i id="memstatusicon" class="fa fa-cog fa-spin" style="display:none;"></i> <strong>Operation Screen</strong></th>
             <th style="text-transform: none;"><strong>Started:</strong> <em><?=$memlaststart?></em></th>
-            <th style="text-transform: none;"><strong>Finished:</strong> <em><?=$memlastfinish?></em><span style="float:right;"><strong>Refresh:</strong> <i class="memlogcontrol fa fa-refresh fa-spin"></i></span></th>
+            <th style="text-transform: none;"><strong>Finished:</strong> <em><?=$memlastfinish?></em><span style="float:right;"><strong>Refresh:</strong> <i id="memlogcontrol" class="fa fa-refresh fa-spin"></i></span></th>
         </tr>
     </thead>
 </table>
@@ -66,7 +58,7 @@ $memlastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecial
         <tr>
             <th><i id="memstatusicon" class="fa fa-cog fa-spin" style="display:none;"></i> <strong>Operation Screen - Errors</strong></th>
             <th style="text-transform: none;"><strong>Started:</strong> <em><?=$memlaststart?></em></th>
-            <th style="text-transform: none;"><strong>Finished:</strong> <em><?=$memlastfinish?></em><span style="float:right;"><strong>Refresh:</strong> <i class="memlogcontrol fa fa-refresh fa-spin"></i></span></th>
+            <th style="text-transform: none;"><strong>Finished:</strong> <em><?=$memlastfinish?></em><span style="float:right;"><strong>Refresh:</strong> <i id="memlogcontrol" class="fa fa-refresh fa-spin"></i></span></th>
         </tr>
     </thead>
 </table>
@@ -110,7 +102,7 @@ function getMemStatus() {
                 $('#memstatusicon').hide();
                 $('.memrun').prop('disabled', false);
                 $('.memnotrun').prop('disabled', true);
-                $('.memlogcontrol').attr("class", "fa fa-refresh");
+                $('#memlogcontrol').attr("class", "fa fa-refresh");
                 clearTimeout(timers.getMemLogs);
                 clearTimeout(timers.getErrLogs);
             }
@@ -120,12 +112,12 @@ function getMemStatus() {
     timers.getMemStatus = setTimeout(getMemStatus, 3000);
 }
 function toggleMemLogs() {
-    if($('.memlogcontrol').attr("class") == "fa fa-refresh fa-spin") {
-        $('.memlogcontrol').attr("class", "fa fa-refresh");
+    if($('#memlogcontrol').attr("class") == "fa fa-refresh fa-spin") {
+        $('#memlogcontrol').attr("class", "fa fa-refresh");
         clearTimeout(timers.getMemLogs);
         clearTimeout(timers.getErrLogs);
     } else {
-        $('.memlogcontrol').attr("class", "fa fa-refresh fa-spin");
+        $('#memlogcontrol').attr("class", "fa fa-refresh fa-spin");
         getMemLogs();
         getErrLogs();
     }
@@ -152,7 +144,7 @@ $(function()
         $('#memcommand').val('/usr/local/emhttp/plugins/dwmemtester/scripts/kill');
         $('#memcommands').submit();
     });
-    $('.memlogcontrol').click(toggleMemLogs);
+    $('#memlogcontrol').click(toggleMemLogs);
     getMemStatus()
     getMemLogs();
     getErrLogs();
