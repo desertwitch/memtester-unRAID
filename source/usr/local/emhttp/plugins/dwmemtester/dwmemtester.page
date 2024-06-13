@@ -26,7 +26,7 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
     word-wrap: normal !important;
     white-space: pre !important;
 }
-.errlog {
+.memerrlog {
     height: 450px;
     max-height: 450px;
     width: 100%;
