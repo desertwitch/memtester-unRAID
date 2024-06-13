@@ -1,6 +1,22 @@
 #!/bin/bash
-DOCROOT="/usr/local/emhttp/plugins/dwmemtester"
-chmod 755 $DOCROOT/scripts/*
+#
+# Copyright Derek Macias (parts of code from NUT package)
+# Copyright macester (parts of code from NUT package)
+# Copyright gfjardim (parts of code from NUT package)
+# Copyright SimonF (parts of code from NUT package)
+# Copyright Lime Technology (any and all other parts of Unraid)
+#
+# Copyright Oliver Cervera (parts of code from snapraid-aio-script)
+# Copyright desertwitch (as author and maintainer of this file)
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License 2
+# as published by the Free Software Foundation.
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+chmod 755 /usr/local/emhttp/plugins/dwmemtester/scripts/*
 chmod 755 /usr/bin/memtester
 chmod 755 /usr/bin/memtester-runner
 
@@ -8,7 +24,7 @@ if ! mountpoint -q /var/lib/memtester; then
     rm -rf /var/lib/memtester
     mkdir -p /var/lib/memtester
     if ! mount -t tmpfs -o size=30% tmpfs /var/lib/memtester; then
-        echo "[error] Failed to create a RAM disk for memtester, falling back to regular folder." | logger -t "memtester-installer"
+        echo "[ERROR] Failed to create a RAM disk for memtester, falling back to a regular folder." | logger -t "memtester-installer"
     fi
 fi
 

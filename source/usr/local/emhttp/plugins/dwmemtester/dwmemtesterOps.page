@@ -6,13 +6,30 @@ Tag="microchip"
 Markdown="false"
 ---
 <?
+/* Copyright Derek Macias (parts of code from NUT package)
+ * Copyright macester (parts of code from NUT package)
+ * Copyright gfjardim (parts of code from NUT package)
+ * Copyright SimonF (parts of code from NUT package)
+ * Copyright Dan Landon (parts of code from Web GUI)
+ * Copyright Bergware International (parts of code from Web GUI)
+ * Copyright Lime Technology (any and all other parts of Unraid)
+ *
+ * Copyright desertwitch (as author and maintainer of this file)
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License 2
+ * as published by the Free Software Foundation.
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ */
 require_once '/usr/local/emhttp/plugins/dwmemtester/include/dwmemtester_helpers.php';
 
 $mem_laststart = trim(file_exists("/var/lib/memtester/laststart") ? htmlspecialchars(file_get_contents("/var/lib/memtester/laststart")) : "-");
 $mem_lastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecialchars(file_get_contents("/var/lib/memtester/lastfinish")) : "-");
 $mem_log_size = trim(file_exists("/var/lib/memtester/log") ? htmlspecialchars(humanFileSize(filesize("/var/lib/memtester/log"))) : "-");
 $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialchars(humanFileSize(filesize("/var/lib/memtester/errlog"))) : "-");
-
 ?>
 
 <style type="text/css">
@@ -102,7 +119,7 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
 </form>
 
 <script type="text/javascript">
-function GetRegularMemLogs() {
+function getRegularMemLogs() {
     $.get('/plugins/dwmemtester/include/dwmemtester_log.php', {"type": "regular"}, function(data) {
         if (data) { 
             $('#memlogviewer').html(data); 
@@ -110,10 +127,10 @@ function GetRegularMemLogs() {
 	        pre.scrollTop(pre.prop("scrollHeight"));
 	    }
     });
-    clearTimeout(timers.GetRegularMemLogs);
-    timers.GetRegularMemLogs = setTimeout(GetRegularMemLogs, 1000);
+    clearTimeout(timers.getRegularMemLogs);
+    timers.getRegularMemLogs = setTimeout(getRegularMemLogs, 1000);
 }
-function GetErrorMemLogs() {
+function getErrorMemLogs() {
     $.get('/plugins/dwmemtester/include/dwmemtester_log.php', {"type": "errors"}, function(data) {
         if (data) { 
             $('#memerrlogviewer').html(data); 
@@ -121,10 +138,10 @@ function GetErrorMemLogs() {
 	        pre.scrollTop(pre.prop("scrollHeight"));
 	    }
     });
-    clearTimeout(timers.GetErrorMemLogs);
-    timers.GetErrorMemLogs = setTimeout(GetErrorMemLogs, 1000);
+    clearTimeout(timers.getErrorMemLogs);
+    timers.getErrorMemLogs = setTimeout(getErrorMemLogs, 1000);
 }
-function GetMemStatus() {
+function getMemStatus() {
     $.get('/plugins/dwmemtester/include/dwmemtester_status.php', {"getfs": "yes"}, function(data) {
         if (data) {
             var splitData = data.split(",");
@@ -141,8 +158,8 @@ function GetMemStatus() {
                     $('.memrun').prop('disabled', false);
                     $('.memnotrun').prop('disabled', true);
                     $('#memlogcontrol').attr("class", "fa fa-refresh");
-                    clearTimeout(timers.GetRegularMemLogs);
-                    clearTimeout(timers.GetErrorMemLogs);
+                    clearTimeout(timers.getRegularMemLogs);
+                    clearTimeout(timers.getErrorMemLogs);
                 }
             }
             if(splitData[1]) {
@@ -160,18 +177,18 @@ function GetMemStatus() {
             }
 	    }
     });
-    clearTimeout(timers.GetMemStatus);
-    timers.GetMemStatus = setTimeout(GetMemStatus, 3000);
+    clearTimeout(timers.getMemStatus);
+    timers.getMemStatus = setTimeout(getMemStatus, 3000);
 }
 function toggleMemLogs() {
     if($('#memlogcontrol').attr("class") == "fa fa-refresh fa-spin") {
         $('#memlogcontrol').attr("class", "fa fa-refresh");
-        clearTimeout(timers.GetRegularMemLogs);
-        clearTimeout(timers.GetErrorMemLogs);
+        clearTimeout(timers.getRegularMemLogs);
+        clearTimeout(timers.getErrorMemLogs);
     } else {
         $('#memlogcontrol').attr("class", "fa fa-refresh fa-spin");
-        GetRegularMemLogs();
-        GetErrorMemLogs();
+        getRegularMemLogs();
+        getErrorMemLogs();
     }
 }
 $(function()
@@ -214,9 +231,9 @@ $(function()
     $('.memtip').tooltipster({
         maxWidth: 300
     });
-    GetMemStatus()
-    GetRegularMemLogs();
-    GetErrorMemLogs();
+    getMemStatus()
+    getRegularMemLogs();
+    getErrorMemLogs();
     showStatus('memtester');
 });
 </script>
