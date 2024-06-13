@@ -96,7 +96,7 @@ if($mem_disk_util !== "-") {
     <input type="hidden" id="arg2" name="#arg[2]" value="">
     <input type="hidden" id="arg3" name="#arg[3]" value="">
     <input type="hidden" id="arg4" name="#arg[4]" value="">
-    <input type="hidden" id="arg4" name="#arg[5]" value="">
+    <input type="hidden" id="arg5" name="#arg[5]" value="">
 
     <input type="text" class="narrow memrun" id="memsize" name="#arg[6]" placeholder="<memory>[B|K|M|G]" value="">
     <input type="text" class="narrow memrun" id="memloops" name="#arg[7]" placeholder="(optional) loops" value="">
