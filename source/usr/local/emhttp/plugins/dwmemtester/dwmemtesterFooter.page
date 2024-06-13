@@ -17,10 +17,13 @@ Link="nav-user"
 function getMemFooter() {
     $.get('/plugins/dwmemtester/include/dwmemtester_status.php', function(data) {
         if (data) {
-            if(data === "RUNNING:YES") {
-                $('#memtest_footer').show();
-            } else if (data === "RUNNING:NO") {
-                $('#memtest_footer').hide();
+            var splitData = data.split(",");
+            if(splitData[0]) {
+                if(splitData[0] === "RUNNING:YES") {
+                    $('#memtest_footer').show();
+                } else if (splitData[0] === "RUNNING:NO") {
+                    $('#memtest_footer').hide();
+                }
             }
 	    }
     });
