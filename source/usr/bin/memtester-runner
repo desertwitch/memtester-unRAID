@@ -1,4 +1,8 @@
 #!/bin/bash
 params=("$@")
 mkdir -p /var/log/memtester
+rm -f /var/log/memtester/laststart
+rm -f /var/log/memtester/lastfinish
+date +"%d.%m.%Y %H:%M:%S %Z" > /var/log/memtester/laststart
 /usr/bin/memtester "${params[@]}" 2>&1 | tee /var/log/memtester/log
+date +"%d.%m.%Y %H:%M:%S %Z" > /var/log/memtester/lastfinish
