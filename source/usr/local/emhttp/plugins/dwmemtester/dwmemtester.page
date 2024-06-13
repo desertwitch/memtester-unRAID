@@ -116,30 +116,6 @@ if($mem_disk_util !== "-") {
 </form>
 
 <script type="text/javascript">
-function humanFileSize(sizeObj, unit = "") {
-    try {
-        const size = parseInt(sizeObj, 10);
-        if (size) {
-            if ((!unit && size >= (1 << 40)) || unit === "TB") {
-                return (size / (1 << 40)).toFixed(2) + " TB";
-            }
-            if ((!unit && size >= (1 << 30)) || unit === "GB") {
-                return (size / (1 << 30)).toFixed(2) + " GB";
-            }
-            if ((!unit && size >= (1 << 20)) || unit === "MB") {
-                return (size / (1 << 20)).toFixed(2) + " MB";
-            }
-            if ((!unit && size >= (1 << 10)) || unit === "KB") {
-                return (size / (1 << 10)).toFixed(2) + " KB";
-            }
-            return size.toLocaleString() + " B";
-        } else {
-            return false;
-        }
-    } catch (e) {
-        return false;
-    }
-}
 function getMemLogs() {
     $.get('/plugins/dwmemtester/include/dwmemtester_log.php', function(data) {
         if (data) { 
@@ -184,16 +160,10 @@ function getMemStatus() {
                 }
             }
             if(splitData[1]) {
-                var retFileSize = humanFileSize(splitData[1]);
-                if(retFileSize) {
-                    $('#memsumsize').html(retFileSize);
-                }
+                $('#memsumsize').html(splitData[1]);
             }
             if(splitData[2]) {
-                var retFileSize = humanFileSize(splitData[2]);
-                if(retFileSize) {
-                    $('#memerrsize').html(retFileSize);
-                }
+                $('#memerrsize').html(splitData[2]);
             }
 	    }
     });
