@@ -6,14 +6,14 @@ Tag="microchip"
 Markdown="false"
 ---
 <?
-$memlaststart = trim(file_exists("/var/log/memtester/laststart") ? htmlspecialchars(file_get_contents("/var/log/memtester/laststart")) : "-");
-$memlastfinish = trim(file_exists("/var/log/memtester/lastfinish") ? htmlspecialchars(file_get_contents("/var/log/memtester/lastfinish")) : "-");
+$memlaststart = trim(file_exists("/var/lib/memtester/laststart") ? htmlspecialchars(file_get_contents("/var/lib/memtester/laststart")) : "-");
+$memlastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecialchars(file_get_contents("/var/lib/memtester/lastfinish")) : "-");
 ?>
 
 <style type="text/css">
 .memlog {
-    height: 450px;
-    max-height: 450px;
+    height: 225;
+    max-height: 225;
     overflow: auto;
     word-break: normal !important;
     word-wrap: normal !important;
@@ -32,6 +32,7 @@ $memlastfinish = trim(file_exists("/var/log/memtester/lastfinish") ? htmlspecial
 </table>
 
 <span id="memlogviewer"><div style="text-align:center;"><i class="fa fa-spinner fa-spin"></i> <em>Please wait, retrieving information...</em></div></span>
+<span id="errlogviewer"><div style="text-align:center;"><i class="fa fa-spinner fa-spin"></i> <em>Please wait, retrieving information...</em></div></span>
 
 <form markdown="0" id="memcommands" name="memcommands" method="POST" action="/update.php" target="progressFrame">
     <input type="hidden" id="memcommand" name="#command" value="/usr/local/emhttp/plugins/dwmemtester/scripts/start">
@@ -65,6 +66,17 @@ function getMemLogs() {
     clearTimeout(timers.getMemLogs);
     timers.getMemLogs = setTimeout(getMemLogs, 1000);
 }
+function getErrLogs() {
+    $.get('/plugins/dwmemtester/include/dwmemtester_errlog.php', function(data) {
+        if (data) { 
+            $('#errlogviewer').html(data); 
+	        var pre2 = $(".errlog");
+	        pre2.scrollTop(pre2.prop("scrollHeight"));
+	    }
+    });
+    clearTimeout(timers.getErrLogs);
+    timers.getErrLogs = setTimeout(getErrLogs, 1000);
+}
 function getMemStatus() {
     $.get('/plugins/dwmemtester/include/dwmemtester_status.php', function(data) {
         if (data) {
@@ -81,6 +93,7 @@ function getMemStatus() {
                 $('.memnotrun').prop('disabled', true);
                 $('#memlogcontrol').attr("class", "fa fa-refresh");
                 clearTimeout(timers.getMemLogs);
+                clearTimeout(timers.getErrLogs);
             }
 	    }
     });
@@ -91,9 +104,11 @@ function toggleMemLogs() {
     if($('#memlogcontrol').attr("class") == "fa fa-refresh fa-spin") {
         $('#memlogcontrol').attr("class", "fa fa-refresh");
         clearTimeout(timers.getMemLogs);
+        clearTimeout(timers.getErrLogs);
     } else {
         $('#memlogcontrol').attr("class", "fa fa-refresh fa-spin");
         getMemLogs();
+        getErrLogs();
     }
 }
 $(function()
@@ -121,5 +136,6 @@ $(function()
     $('#memlogcontrol').click(toggleMemLogs);
     getMemStatus()
     getMemLogs();
+    getErrLogs();
 });
 </script>
