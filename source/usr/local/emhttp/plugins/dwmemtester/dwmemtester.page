@@ -66,13 +66,14 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
 <form markdown="0" id="memcommands" name="memcommands" method="POST" action="/update.php" target="progressFrame">
     <input type="hidden" id="memcommand" name="#command" value="/usr/local/emhttp/plugins/dwmemtester/scripts/start">
     <input type="hidden" id="arg1" name="#arg[1]" value="0">
-    <input type="hidden" id="arg2" name="#arg[2]" value="">
+    <input type="hidden" id="arg2" name="#arg[2]" value="0">
     <input type="hidden" id="arg3" name="#arg[3]" value="">
     <input type="hidden" id="arg4" name="#arg[4]" value="">
     <input type="hidden" id="arg5" name="#arg[5]" value="">
+    <input type="hidden" id="arg6" name="#arg[6]" value="">
 
-    <input type="text" class="narrow memrun" id="memsize" name="#arg[6]" placeholder="<memory>[B|K|M|G]" value="">
-    <input type="text" class="narrow memrun" id="memloops" name="#arg[7]" placeholder="(optional) loops" value="">
+    <input type="text" class="narrow memrun" id="memsize" name="#arg[7]" placeholder="<memory>[B|K|M|G]" value="">
+    <input type="text" class="narrow memrun" id="memloops" name="#arg[8]" placeholder="(optional) loops" value="">
     <input type="button" class="memrun" id="memstart" value="Start Operation">
     <input type="text" class="memrun" id="memhex" placeholder="(optional) hex starting point" value="">
     <input type="text" class="memrun" id="memtarget" placeholder="(optional) target device" value="">
@@ -84,7 +85,10 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
     </span><br>
 
     <input type="checkbox" id="memerrs" value="memerrs">
-    <label for="memerrs">Write Detailed Error Output (<strong>Not Recommended</strong> - Recording Huge Amounts of Errors May Exceed Available RAM)</label>   
+    <label for="memerrs">Write Detailed Error Output (<strong>Not Recommended</strong>)</label>   
+
+    <input type="checkbox" id="memnotify" value="memnotify">
+    <label for="memnotify">Notify on Operation Complete</label> 
 
 </form>
 
@@ -168,13 +172,16 @@ $(function()
         if($('#memerrs').is(':checked')) {
             $('#arg1').val('1');
         }
+        if($('#memnotify').is(':checked')) {
+            $('#arg2').val('1');
+        }    
         if($('#memhex').val()) {
-            $('#arg2').val('-p');
-            $('#arg3').val($('#memhex').val());
+            $('#arg3').val('-p');
+            $('#arg4').val($('#memhex').val());
         }
         if($('#memtarget').val()) {
-            $('#arg4').val('-d');
-            $('#arg5').val($('#memtarget').val());
+            $('#arg5').val('-d');
+            $('#arg6').val($('#memtarget').val());
         }
         $('#memcommands').submit();
     });

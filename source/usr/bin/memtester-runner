@@ -1,5 +1,12 @@
 #!/bin/bash
 
+NOTIFY_BIN="/usr/local/emhttp/plugins/dynamix/scripts/notify"
+HOST="$(echo "$HOSTNAME" | awk '{print toupper($0)}')"
+EVENT="Memory Testing"
+SUBJECT="[${HOST}] Memory Testing:"
+
+params=("$@")
+
 # shellcheck disable=SC2317
 signal_exit_memtest() {
     echo "" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
@@ -7,10 +14,9 @@ signal_exit_memtest() {
     ENDDATE="$(date +"%d.%m.%Y %H:%M:%S %Z")"
     echo "${ENDDATE}" > /var/lib/memtester/lastfinish
     printf "[%s] The operation was interrupted and has not finished.\n[%s] Code: SIGTERM - Program Interrupt." "${ENDDATE}" "${ENDDATE}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+    [ "${params[0]}" == "1" ] && $NOTIFY_BIN -e "${EVENT}" -s "Alert ${SUBJECT} Interrupted" -d "Program Interrupt (Code: SIGTERM)" -i "alert"
     exit 1
 }
-
-params=("$@")
 
 [ ! -d /var/lib/memtester ] && mkdir -p /var/lib/memtester
 
@@ -22,19 +28,19 @@ echo "$STARTDATE" > /var/lib/memtester/laststart
 
 trap signal_exit_memtest SIGTERM SIGINT 
 
-echo "[${STARTDATE}] /usr/bin/memtester ${params[*]:1}" | tee /var/lib/memtester/log /var/lib/memtester/errlog
+echo "[${STARTDATE}] /usr/bin/memtester ${params[*]:2}" | tee /var/lib/memtester/log /var/lib/memtester/errlog
 echo "=============================================================================================" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 echo "" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 
-if [ "${params[0]}" == "1" ]; then
+if [ "${params[1]}" == "1" ]; then
     echo "The detailed error output was enabled, please watch this panel for any occuring errors." | tee -a /var/lib/memtester/errlog
     echo "" | tee -a /var/lib/memtester/errlog
-    /usr/bin/memtester "${params[@]:1}" 1>>/var/lib/memtester/log 2>>/var/lib/memtester/errlog
+    /usr/bin/memtester "${params[@]:2}" 1>>/var/lib/memtester/log 2>>/var/lib/memtester/errlog
     CMDRET=${PIPESTATUS[0]}
 else
     echo "The detailed error output was disabled, please refer to the left panel for the test summary." | tee -a /var/lib/memtester/errlog
     echo "" | tee -a /var/lib/memtester/errlog
-    /usr/bin/memtester "${params[@]:1}" 1>>/var/lib/memtester/log 2>/dev/null
+    /usr/bin/memtester "${params[@]:2}" 1>>/var/lib/memtester/log 2>/dev/null
     CMDRET=${PIPESTATUS[0]}
 fi
 
@@ -46,16 +52,22 @@ echo "$ENDDATE" > /var/lib/memtester/lastfinish
 
 if [ "$CMDRET" -eq 0 ]; then
     printf "[%s] The operation has finished without errors.\n[%s] Code: %s - OK." "${ENDDATE}" "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+    [ "${params[0]}" == "1" ] && $NOTIFY_BIN -e "${EVENT}" -s "Notice ${SUBJECT} Success" -d "The operation has finished without errors. (Code: ${CMDRET})" -i "normal"
 elif [ "$CMDRET" -eq 1 ]; then
     printf "[%s] The operation has finished with errors.\n[%s] Code: %s - Program Invocation or Memory Allocation Error." "${ENDDATE}" "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+    [ "${params[0]}" == "1" ] && $NOTIFY_BIN -e "${EVENT}" -s "Alert ${SUBJECT} Failure" -d "Program Invocation or Memory Allocation Error (Code: ${CMDRET})" -i "alert"
 elif [ "$CMDRET" -eq 2 ]; then
     printf "[%s] The operation has finished with errors.\n[%s] Code: %s - Error during Stuck Address Test." "${ENDDATE}" "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+    [ "${params[0]}" == "1" ] && $NOTIFY_BIN -e "${EVENT}" -s "Alert ${SUBJECT} Failure" -d "Error during Stuck Address Test (Code: ${CMDRET})" -i "alert"
 elif [ "$CMDRET" -eq 4 ]; then
     printf "[%s] The operation has finished with errors.\n[%s] Code: %s - Error during Test(s)." "${ENDDATE}" "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+    [ "${params[0]}" == "1" ] && $NOTIFY_BIN -e "${EVENT}" -s "Alert ${SUBJECT} Failure" -d "Error during Test(s) (Code: ${CMDRET})" -i "alert"
 elif [ "$CMDRET" -eq 6 ]; then
     printf "[%s] The operation has finished with errors.\n[%s] Code: %s - Error during Stuck Address Test + Other Test(s)." "${ENDDATE}" "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+    [ "${params[0]}" == "1" ] && $NOTIFY_BIN -e "${EVENT}" -s "Alert ${SUBJECT} Failure" -d "Error during Stuck Address Test + Other Test(s) (Code: ${CMDRET})" -i "alert"
 else
     printf "[%s] The operation has finished with errors.\n[%s] Code: %s - Check Operation Output for Details." "${ENDDATE}" "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+    [ "${params[0]}" == "1" ] && $NOTIFY_BIN -e "${EVENT}" -s "Alert ${SUBJECT} Failure" -d "Check Operation Output for Details (Code: ${CMDRET})" -i "alert"
 fi
 
 exit 0
