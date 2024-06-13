@@ -139,7 +139,7 @@ function getErrLogs() {
     timers.getErrLogs = setTimeout(getErrLogs, 1000);
 }
 function getMemStatus() {
-    $.get('/plugins/dwmemtester/include/dwmemtester_status.php', function(data) {
+    $.get('/plugins/dwmemtester/include/dwmemtester_status.php', {"getfs": "yes"}, function(data) {
         if (data) {
             var splitData = data.split(",");
             if(splitData[0]) {
