@@ -1,6 +1,6 @@
 Menu="Utilities"
 Type="xmenu"
-Title="Memory Testing"
+Title="Live Memory Testing (LMT)"
 Icon="microchip"
 Tag="microchip"
 Markdown="false"
