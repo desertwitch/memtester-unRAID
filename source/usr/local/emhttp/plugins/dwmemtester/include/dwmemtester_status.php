@@ -27,7 +27,7 @@ $mem_running = "";
 $memlog_size = "";
 $errlog_size = "";
 
-if(!empty[$_GET["getfs"]]) {
+if(!empty($_GET["getfs"])) {
     $getfs = true;
 }
 
