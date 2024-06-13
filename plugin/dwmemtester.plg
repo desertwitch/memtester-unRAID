@@ -27,7 +27,7 @@ install or upgrade dependency files
 -->
 <FILE Name="&plgPATH;/memtester-4.6.0_1-x86_64-1_dw.txz" Min="6.8.3" Run="upgradepkg --install-new">
 <URL>&pkgURL;/memtester-4.6.0_1-x86_64-1_dw.txz</URL>
-<MD5>1ff502da6b5970ad81fd02406353b791</MD5>
+<MD5>bd42e619d4610d52c9382fe3f09ad57e</MD5>
 </FILE>
 
 
