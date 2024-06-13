@@ -44,7 +44,7 @@ function GetMemFooter() {
 }
 $(function()
 {
-    var mem_footer = $("<span id='memtest_footer'><i class='fa fa-microchip'></i><strong> Memory Testing in Progress<span class='memramwarning' style='display:none'> / <i class='fa fa-exclamation-triangle'></i> RAM Disk > 90% (No More Output Possible)</span></strong></span>").insertAfter("div#footer > span#copyright");
+    var mem_footer = $("<span id='memtest_footer'><i class='fa fa-microchip'></i><strong> Memory Testing in Progress<span class='memramwarning' style='display:none'> / <i class='fa fa-exclamation-triangle'></i> RAM Disk Utilization > 90%</span></strong></span>").insertAfter("div#footer > span#copyright");
     GetMemFooter();
 });
 </script>
