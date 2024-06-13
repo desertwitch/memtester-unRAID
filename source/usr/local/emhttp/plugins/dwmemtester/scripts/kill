@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Killing Operation..."
+echo "Killing..."
 killall memtester-runner
 killall memtester
 sleep 3

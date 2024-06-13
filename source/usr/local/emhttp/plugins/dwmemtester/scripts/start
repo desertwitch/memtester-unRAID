@@ -1,6 +1,6 @@
 #!/bin/bash
 params=("$@")
 for i in "${!params[@]}"; do [ -z "${params[i]}" ] && unset "params[i]"; done
-echo "Starting Operation..."
+echo "Starting..."
 nohup /usr/bin/memtester-runner "${params[@]}" >/dev/null 2>&1 &
 sleep 1
