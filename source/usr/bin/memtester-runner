@@ -13,6 +13,8 @@ rm -f /var/log/memtester/laststart
 rm -f /var/log/memtester/lastfinish
 date +"%d.%m.%Y %H:%M:%S %Z" > /var/log/memtester/laststart
 trap signal_exit_memtest SIGTERM SIGINT 
+echo "/usr/bin/memtester ${params[*]}"
+echo ""
 /usr/bin/memtester "${params[@]}" 2>&1 | tee /var/log/memtester/log
 CMDRET=${PIPESTATUS[0]}
 if [ "$CMDRET" -eq 0 ]; then
