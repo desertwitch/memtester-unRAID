@@ -62,16 +62,20 @@ $errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialchars(
 
 <form markdown="0" id="memcommands" name="memcommands" method="POST" action="/update.php" target="progressFrame">
     <input type="hidden" id="memcommand" name="#command" value="/usr/local/emhttp/plugins/dwmemtester/scripts/start">
-    <input type="hidden" id="arg1" name="#arg[1]" value="">
+    <input type="hidden" id="arg1" name="#arg[1]" value="0">
     <input type="hidden" id="arg2" name="#arg[2]" value="">
     <input type="hidden" id="arg3" name="#arg[3]" value="">
     <input type="hidden" id="arg4" name="#arg[4]" value="">
+    <input type="hidden" id="arg4" name="#arg[5]" value="">
 
     <input type="text" class="narrow memrun" id="memsize" name="#arg[5]" placeholder="<memory>[B|K|M|G]" value="">
     <input type="text" class="narrow memrun" id="memloops" name="#arg[6]" placeholder="(optional) loops" value="">
     <input type="button" class="memrun" id="memstart" value="Start Operation">
     <input type="text" class="memrun" id="memhex" placeholder="(optional) hex starting point" value="">
     <input type="text" class="memrun" id="memtarget" placeholder="(optional) target device" value="">
+
+    <input type="checkbox" id="memerrs" value="memerrs">
+    <label for="memerrs">Write Detailed Errors (Not Recommended)</label>    
 
     <span style="float:right;">
         <input type="button" class="memrun" id="memclear" value="Clear Logs">
@@ -142,13 +146,16 @@ $(function()
 {
     $('#memstart').click(function(){
         $('#memcommand').val('/usr/local/emhttp/plugins/dwmemtester/scripts/start');
+        if($('#memerrs').is(':checked')) {
+            $('#arg1').val('1');
+        }
         if($('#memhex').val()) {
-            $('#arg1').val('-p');
-            $('#arg2').val($('#memhex').val());
+            $('#arg2').val('-p');
+            $('#arg3').val($('#memhex').val());
         }
         if($('#memtarget').val()) {
-            $('#arg3').val('-d');
-            $('#arg4').val($('#memtarget').val());
+            $('#arg4').val('-d');
+            $('#arg5').val($('#memtarget').val());
         }
         $('#memcommands').submit();
     });
