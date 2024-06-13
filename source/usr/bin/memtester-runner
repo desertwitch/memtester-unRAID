@@ -93,8 +93,8 @@ elif [ "$CMDRET" -eq 6 ]; then
     printf "[%s] The operation has finished with errors.\n[%s] Code: %s - Error during Stuck Address Test + Other Test(s)." "${ENDDATE}" "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
     [ "${params[1]}" == "1" ] && $NOTIFY_BIN -e "${EVENT}" -s "Alert ${SUBJECT} Failure" -d "Error during Stuck Address Test + Other Test(s) (Code: ${CMDRET})" -i "alert"
 else
-    printf "[%s] The operation has finished with errors.\n[%s] Code: %s - Check Operation Output for Details." "${ENDDATE}" "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
-    [ "${params[1]}" == "1" ] && $NOTIFY_BIN -e "${EVENT}" -s "Alert ${SUBJECT} Failure" -d "Check Operation Output for Details (Code: ${CMDRET})" -i "alert"
+    printf "[%s] The operation has finished with errors.\n[%s] Code: %s - Check Operation Output and/or SYSLOG." "${ENDDATE}" "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+    [ "${params[1]}" == "1" ] && $NOTIFY_BIN -e "${EVENT}" -s "Alert ${SUBJECT} Failure" -d "Check Operation Output and/or SYSLOG (Code: ${CMDRET})" -i "alert"
 fi
 
 exit 0
