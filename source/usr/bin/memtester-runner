@@ -1,8 +1,18 @@
 #!/bin/bash
+
+# shellcheck disable=SC2317
+signal_exit_memtest() {
+    printf "\n\nOPERATION WAS INTERRUPTED [SIGTERM/SIGINT]"
+    date +"%d.%m.%Y %H:%M:%S %Z" > /var/log/memtester/lastfinish
+    exit 1
+}
+
 params=("$@")
 mkdir -p /var/log/memtester
 rm -f /var/log/memtester/laststart
 rm -f /var/log/memtester/lastfinish
 date +"%d.%m.%Y %H:%M:%S %Z" > /var/log/memtester/laststart
+trap signal_exit_memtest SIGTERM SIGINT 
 /usr/bin/memtester "${params[@]}" 2>&1 | tee /var/log/memtester/log
 date +"%d.%m.%Y %H:%M:%S %Z" > /var/log/memtester/lastfinish
+exit 0
