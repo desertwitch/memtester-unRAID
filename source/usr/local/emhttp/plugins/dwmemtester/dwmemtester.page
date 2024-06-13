@@ -87,7 +87,7 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
     <input type="checkbox" id="memerrs" value="memerrs">
     <label for="memerrs">Write Detailed Error Output (<strong>Not Recommended</strong>)</label>   
 
-    <input type="checkbox" id="memnotify" value="memnotify">
+    <input type="checkbox" id="memnotify" value="memnotify" style="margin-left:10px;">
     <label for="memnotify">Notify on Operation Complete</label> 
 
 </form>
