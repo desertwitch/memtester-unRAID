@@ -12,8 +12,8 @@ $memlastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecial
 
 <style type="text/css">
 .memlog {
-    height: 225;
-    max-height: 225;
+    height: 225px;
+    max-height: 225px;
     overflow: auto;
     word-break: normal !important;
     word-wrap: normal !important;
