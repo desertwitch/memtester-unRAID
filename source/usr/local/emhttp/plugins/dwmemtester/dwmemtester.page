@@ -12,8 +12,8 @@ $memlastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecial
 
 <style type="text/css">
 .memlog {
-    height: 225px;
-    max-height: 225px;
+    height: 450px;
+    max-height: 450px;
     overflow: auto;
     word-break: normal !important;
     word-wrap: normal !important;
@@ -32,7 +32,6 @@ $memlastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecial
 </table>
 
 <span id="memlogviewer"><div style="text-align:center;"><i class="fa fa-spinner fa-spin"></i> <em>Please wait, retrieving information...</em></div></span>
-<span id="errlogviewer"><div style="text-align:center;"><i class="fa fa-spinner fa-spin"></i> <em>Please wait, retrieving information...</em></div></span>
 
 <form markdown="0" id="memcommands" name="memcommands" method="POST" action="/update.php" target="progressFrame">
     <input type="hidden" id="memcommand" name="#command" value="/usr/local/emhttp/plugins/dwmemtester/scripts/start">
@@ -53,6 +52,18 @@ $memlastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecial
     </span><br>
 
 </form>
+
+<table class="tablesorter">
+    <thead>
+        <tr>
+            <th><i id="memstatusicon" class="fa fa-cog fa-spin" style="display:none;"></i> <strong>Operation Screen - Errors</strong></th>
+            <th style="text-transform: none;"><strong>Started:</strong> <em><?=$memlaststart?></em></th>
+            <th style="text-transform: none;"><strong>Finished:</strong> <em><?=$memlastfinish?></em><span style="float:right;"><strong>Refresh:</strong> <i id="memlogcontrol" class="fa fa-refresh fa-spin"></i></span></th>
+        </tr>
+    </thead>
+</table>
+
+<span id="errlogviewer"><div style="text-align:center;"><i class="fa fa-spinner fa-spin"></i> <em>Please wait, retrieving information...</em></div></span>
 
 <script type="text/javascript">
 function getMemLogs() {
