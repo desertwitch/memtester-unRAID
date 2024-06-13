@@ -2,7 +2,7 @@
 
 # shellcheck disable=SC2317
 signal_exit_memtest() {
-    printf "\n\nOPERATION WAS INTERRUPTED [RECEIVED SIGTERM/SIGINT]" > /var/log/memtester/log
+    printf "\n\nOPERATION WAS INTERRUPTED [RECEIVED SIGTERM/SIGINT]" >> /var/log/memtester/log
     date +"%d.%m.%Y %H:%M:%S %Z" > /var/log/memtester/lastfinish
     exit 1
 }
@@ -16,9 +16,9 @@ trap signal_exit_memtest SIGTERM SIGINT
 /usr/bin/memtester "${params[@]}" 2>&1 | tee /var/log/memtester/log
 CMDRET=${PIPESTATUS[0]}
 if [ "$CMDRET" -eq 0 ]; then
-    printf "\n\nOPERATION FINISHED WITHOUT ERRORS [RETURN CODE: %s]" "${CMDRET}" > /var/log/memtester/log
+    printf "\n\nOPERATION FINISHED WITHOUT ERRORS [RETURN CODE: %s]" "${CMDRET}" >> /var/log/memtester/log
 else
-    printf "\n\nOPERATION FINISHED WITH ERRORS [RETURN CODE: %s]" "${CMDRET}" > /var/log/memtester/log
+    printf "\n\nOPERATION FINISHED WITH ERRORS [RETURN CODE: %s]" "${CMDRET}" >> /var/log/memtester/log
 fi
 date +"%d.%m.%Y %H:%M:%S %Z" > /var/log/memtester/lastfinish
 exit 0
