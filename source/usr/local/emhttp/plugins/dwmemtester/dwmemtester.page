@@ -12,12 +12,13 @@ $memlastfinish = trim(file_exists("/var/log/memtester/lastfinish") ? htmlspecial
 
 <style type="text/css">
 .memlog {
-    height: 400px;
-    max-height: 400px;
+    height: 600px;
+    max-height: 600px;
     overflow: auto;
     word-break: normal !important;
     word-wrap: normal !important;
     white-space: pre !important;
+    font-size: x-small;
 }
 </style>
 
