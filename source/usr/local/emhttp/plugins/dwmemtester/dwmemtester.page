@@ -14,8 +14,8 @@ $memlastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecial
 .memlog {
     height: 450px;
     max-height: 450px;
-    width: 50%;
-    max-width: 50%;
+    width: 100%;
+    max-width: 100%;
     overflow: auto;
     word-break: normal !important;
     word-wrap: normal !important;
@@ -24,8 +24,8 @@ $memlastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecial
 .errlog {
     height: 450px;
     max-height: 450px;
-    width: 50%;
-    max-width: 50%;
+    width: 100%;
+    max-width: 100%;
     overflow: auto;
     word-break: normal !important;
     word-wrap: normal !important;
@@ -45,11 +45,11 @@ $memlastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecial
 
 <br>
 
-<table class="tablesorter">
+<table class="tablesorter shift">
 <thead>
 <tr>
-<th>REGULAR OUTPUT</th>
-<th>ERROR OUTPUT</th>
+<th><strong>REGULAR OUTPUT (STDOUT)</strong></th>
+<th><strong>ERROR OUTPUT (STDERR)</strong></th>
 </tr>
 <tbody>
 <tr>
