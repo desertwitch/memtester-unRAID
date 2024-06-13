@@ -140,10 +140,10 @@ function GetMemStatus() {
                 }
             }
             if(splitData[2]) {
-                $('#memsumsize').html(splitData[1]);
+                $('#memsumsize').html(splitData[2]);
             }
             if(splitData[3]) {
-                $('#memerrsize').html(splitData[2]);
+                $('#memerrsize').html(splitData[3]);
             }
 	    }
     });
