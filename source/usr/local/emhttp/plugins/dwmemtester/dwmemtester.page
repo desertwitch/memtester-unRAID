@@ -8,6 +8,8 @@ Markdown="false"
 <?
 $memlaststart = trim(file_exists("/var/lib/memtester/laststart") ? htmlspecialchars(file_get_contents("/var/lib/memtester/laststart")) : "-");
 $memlastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecialchars(file_get_contents("/var/lib/memtester/lastfinish")) : "-");
+$memlog_size = trim(file_exists("/var/lib/memtester/log") ? htmlspecialchars(filesize("/var/lib/memtester/log")) : "-");
+$errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialchars(filesize("/var/lib/memtester/errlog")) : "-");
 ?>
 
 <style type="text/css">
@@ -52,12 +54,14 @@ $memlastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecial
 <thead>
 <tr>
 <th><strong>REGULAR OUTPUT (STDOUT)</strong></th>
+<th>Size: <?=$memlog_size;?> bytes</th>
 <th><strong>ERROR OUTPUT (STDERR)</strong></th>
+<th>Size: <?=$errlog_size;?> bytes</th>
 </tr>
 <tbody>
 <tr>
-<td><span id="memlogviewer"><div style="text-align:center;"><i class="fa fa-spinner fa-spin"></i> <em>Please wait, retrieving information...</em></div></span></td>
-<td><span id="errlogviewer"><div style="text-align:center;"><i class="fa fa-spinner fa-spin"></i> <em>Please wait, retrieving information...</em></div></span></td>
+<td colspan="2"><span id="memlogviewer"><div style="text-align:center;"><i class="fa fa-spinner fa-spin"></i> <em>Please wait, retrieving information...</em></div></span></td>
+<td colspan="2"><span id="errlogviewer"><div style="text-align:center;"><i class="fa fa-spinner fa-spin"></i> <em>Please wait, retrieving information...</em></div></span></td>
 </tr>
 </tbody>
 </table>
@@ -72,8 +76,8 @@ $memlastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecial
     <input type="text" class="narrow memrun" id="memsize" name="#arg[5]" placeholder="<memory>[B|K|M|G]" value="">
     <input type="text" class="narrow memrun" id="memloops" name="#arg[6]" placeholder="(optional) loops" value="">
     <input type="button" class="memrun" id="memstart" value="Start Operation">
-    <input type="text" class="memrun" id="memhex" placeholder="(optional) starting point in hex" value="">
-    <input type="text" class="memrun" id="memtarget" placeholder="(optional) target device e.g. /dev/mem" value="">
+    <input type="text" class="memrun" id="memhex" placeholder="(optional) hex starting point" value="">
+    <input type="text" class="memrun" id="memtarget" placeholder="(optional) target device" value="">
 
     <span style="float:right;">
         <input type="button" class="memnotrun" id="memstop" value="Stop Operation">
