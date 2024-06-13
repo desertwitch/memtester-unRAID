@@ -61,6 +61,7 @@ definition for uninstallation of the plugin
 removepkg &plgPATH;/*.txz
 rm -rf &plgPATH;
 rm -rf &emhttp;
+rm -rf /var/log/memtester
 
 echo ""
 echo "-----------------------------------------------------------"
