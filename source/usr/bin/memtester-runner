@@ -2,8 +2,7 @@
 
 # shellcheck disable=SC2317
 signal_exit_memtest() {
-    printf "\nThe operation was interrupted by a SIGTERM or SIGINT that was received." | tee -a /var/lib/memtester/log
-    printf "\nThe operation was interrupted by a SIGTERM or SIGINT that was received." | tee -a /var/lib/memtester/errlog
+    printf "\nThe operation was interrupted by a SIGTERM or SIGINT that was received." | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
     date +"%d.%m.%Y %H:%M:%S %Z" > /var/lib/memtester/lastfinish
     exit 1
 }
@@ -15,46 +14,44 @@ params=("$@")
 rm -f /var/lib/memtester/laststart
 rm -f /var/lib/memtester/lastfinish
 
-date +"%d.%m.%Y %H:%M:%S %Z" > /var/lib/memtester/laststart
+STARTDATE="$(date +"%d.%m.%Y %H:%M:%S %Z")"
+echo "$STARTDATE" > /var/lib/memtester/laststart
 
 trap signal_exit_memtest SIGTERM SIGINT 
 
-echo ">> /usr/bin/memtester ${params[*]:1}" | tee /var/lib/memtester/log
-echo "" | tee -a /var/lib/memtester/log
-echo ">> /usr/bin/memtester ${params[*]:1}" | tee /var/lib/memtester/errlog
-echo "" | tee -a /var/lib/memtester/errlog
+echo "[${STARTDATE}] /usr/bin/memtester ${params[*]:1}" | tee /var/lib/memtester/log /var/lib/memtester/errlog
+echo "################################################################" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+echo "" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 
 if [ "${params[0]}" == "1" ]; then
-    echo "Detailed error output was enabled, this panel will show any recorded errors." | tee -a /var/lib/memtester/errlog
+    echo "The detailed error output was enabled, please watch this panel for any occuring errors." | tee -a /var/lib/memtester/errlog
     echo "" | tee -a /var/lib/memtester/errlog
     /usr/bin/memtester "${params[@]:1}" 1>>/var/lib/memtester/log 2>>/var/lib/memtester/errlog
     CMDRET=${PIPESTATUS[0]}
 else
-    echo "Detailed error output was disabled, please refer to the left panel for testing summaries." | tee -a /var/lib/memtester/errlog
+    echo "The detailed error output was disabled, please refer to the left panel for the test summary." | tee -a /var/lib/memtester/errlog
     echo "" | tee -a /var/lib/memtester/errlog
     /usr/bin/memtester "${params[@]:1}" 1>>/var/lib/memtester/log 2>/dev/null
     CMDRET=${PIPESTATUS[0]}
 fi
 
+echo "################################################################" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+
+ENDDATE="$(date +"%d.%m.%Y %H:%M:%S %Z")"
+echo "$ENDDATE" > /var/lib/memtester/lastfinish
+
 if [ "$CMDRET" -eq 0 ]; then
-    printf "\nThe operation has finished without errors (return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/log
-    printf "\nThe operation has finished without errors (return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/errlog
+    printf "\n[%s] The operation has finished without errors !!!\n---> Return Code: %s." "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 elif [ "$CMDRET" -eq 1 ]; then
-    printf "\nThe operation has finished with errors (allocating or locking memory, or invocation error / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/log
-    printf "\nThe operation has finished with errors (allocating or locking memory, or invocation error / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/errlog
+    printf "\n[%s] The operation has finished with errors !!!\n---> Program Invocation or Memory Allocation Error / Return Code: %s." "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 elif [ "$CMDRET" -eq 2 ]; then
-    printf "\nThe operation has finished with errors (error during stuck address test / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/log
-    printf "\nThe operation has finished with errors (error during stuck address test / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/errlog
+    printf "\n[%s] The operation has finished with errors !!!\n---> Error during Stuck Address Test / Return Code: %s." "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 elif [ "$CMDRET" -eq 4 ]; then
-    printf "\nThe operation has finished with errors (error during test(s) / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/log
-    printf "\nThe operation has finished with errors (error during test(s) / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/errlog
+    printf "\n[%s] The operation has finished with errors !!!\n---> Error during Test(s) / Return Code: %s." "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 elif [ "$CMDRET" -eq 6 ]; then
-    printf "\nThe operation has finished with errors (error during stuck address test + other test(s) / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/log
-    printf "\nThe operation has finished with errors (error during stuck address test + other test(s) / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/errlog
+    printf "\n[%s] The operation has finished with errors !!!\n---> Error during Stuck Address Test + Other Test(s) / Return code: %s." "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 else
-    printf "\nThe operation has finished with errors (check operation output / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/log
-    printf "\nThe operation has finished with errors (check operation output / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/errlog
+    printf "\n[%s] The operation has finished with errors !!!\n---> Check Operation Output for Details / Return Code: %s." "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 fi
 
-date +"%d.%m.%Y %H:%M:%S %Z" > /var/lib/memtester/lastfinish
 exit 0
