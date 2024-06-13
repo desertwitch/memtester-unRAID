@@ -23,6 +23,11 @@ SUBJECT="[${HOST}] Memory Testing:"
 
 params=("$@")
 
+rm -f /var/lib/memtester/log
+rm -f /var/lib/memtester/errlog
+rm -f /var/lib/memtester/laststart
+rm -f /var/lib/memtester/lastfinish
+
 # shellcheck disable=SC2317
 signal_exit_memtest() {
     echo "" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
@@ -34,17 +39,23 @@ signal_exit_memtest() {
     exit 1
 }
 
-[ ! -d /var/lib/memtester ] && mkdir -p /var/lib/memtester
-
-rm -f /var/lib/memtester/laststart
-rm -f /var/lib/memtester/lastfinish
+if ! mountpoint -q /var/lib/memtester; then 
+    rm -rf /var/lib/memtester
+    mkdir -p /var/lib/memtester
+    if ! mount -t tmpfs -o size=30% tmpfs /var/lib/memtester; then
+        echo "!!! Live Memory Testing could not create a ramdisk for its operational output." | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+        echo "!!! This is to ensure that excessively large logfiles cannot choke the rest of the system." | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+        echo "!!! You can resolve this by reinstalling the plugin, if not please visit the support topic." | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+        echo "" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+    fi
+fi
 
 STARTDATE="$(date +"%d.%m.%Y %H:%M:%S %Z")"
 echo "$STARTDATE" > /var/lib/memtester/laststart
 
 trap signal_exit_memtest SIGTERM SIGINT 
 
-echo "[${STARTDATE}] /usr/bin/memtester ${params[*]:2}" | tee /var/lib/memtester/log /var/lib/memtester/errlog
+echo "[${STARTDATE}] /usr/bin/memtester ${params[*]:2}" | tee -a var/lib/memtester/log /var/lib/memtester/errlog
 echo "=============================================================================================" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 echo "" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 
