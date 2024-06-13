@@ -1,0 +1,7 @@
+#!/bin/bash
+killall memtester-runner
+killall memtester
+sleep 3
+killall -9 memtester
+sleep 3
+killall -9 memtester-runner
