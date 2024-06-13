@@ -2,7 +2,7 @@
 
 NOTIFY_BIN="/usr/local/emhttp/plugins/dynamix/scripts/notify"
 HOST="$(echo "$HOSTNAME" | awk '{print toupper($0)}')"
-EVENT="Live Memory Testing (LMT)"
+EVENT="Live Memory Testing"
 SUBJECT="[${HOST}] Memory Testing:"
 
 params=("$@")
