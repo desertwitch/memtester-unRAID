@@ -6,39 +6,12 @@ Tag="microchip"
 Markdown="false"
 ---
 <?
-function humanFileSize($sizeObj,$unit="") {
-    try {
-        $size = intval($sizeObj);
-        if($size) {
-            if( (!$unit && $size >= 1<<40) || $unit == "TB")
-                return number_format($size/(1<<40),2)." TB";
-            if( (!$unit && $size >= 1<<30) || $unit == "GB")
-                return number_format($size/(1<<30),2)." GB";
-            if( (!$unit && $size >= 1<<20) || $unit == "MB")
-                return number_format($size/(1<<20),2)." MB";
-            if( (!$unit && $size >= 1<<10) || $unit == "KB")
-                return number_format($size/(1<<10),2)." KB";
-            return number_format($size)." B";
-        } else {
-            return "-";
-        }
-    } catch (Throwable $e) { // For PHP 7
-        return "-";
-    } catch (Exception $e) { // For PHP 5
-        return "-";
-    }
-}
+require_once '/usr/local/emhttp/plugins/dwmemtester/include/dwmemtester_helpers.php';
 
-$memlaststart = trim(file_exists("/var/lib/memtester/laststart") ? htmlspecialchars(file_get_contents("/var/lib/memtester/laststart")) : "-");
-$memlastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecialchars(file_get_contents("/var/lib/memtester/lastfinish")) : "-");
-$memlog_size = trim(file_exists("/var/lib/memtester/log") ? htmlspecialchars(humanFileSize(filesize("/var/lib/memtester/log"))) : "-");
-$errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialchars(humanFileSize(filesize("/var/lib/memtester/errlog"))) : "-");
-
-$mem_highram_html = "";
-$mem_disk_util = trim(htmlspecialchars(shell_exec("df --output=pcent /var/lib/memtester 2>/dev/null | tr -dc '0-9' 2>/dev/null") ?? "-"));
-if($mem_disk_util !== "-") {
-    $mem_highram_html = ($mem_disk_util < 90) ? "" : "<span style='margin-right:10px;color:red;'><i class='fa fa-exclamation-triangle'></i> <strong>RAM Disk > 90% (No More Output Possible)</strong></span>";
-}
+$mem_laststart = trim(file_exists("/var/lib/memtester/laststart") ? htmlspecialchars(file_get_contents("/var/lib/memtester/laststart")) : "-");
+$mem_lastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecialchars(file_get_contents("/var/lib/memtester/lastfinish")) : "-");
+$mem_log_size = trim(file_exists("/var/lib/memtester/log") ? htmlspecialchars(humanFileSize(filesize("/var/lib/memtester/log"))) : "-");
+$mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialchars(humanFileSize(filesize("/var/lib/memtester/errlog"))) : "-");
 
 ?>
 
@@ -72,20 +45,20 @@ if($mem_disk_util !== "-") {
 <thead>
 <tr>
 <th><i id="memstatusicon" class="fa fa-cog fa-spin" style="display:none;"></i> <strong>Operation Screen</strong></th>
-<th style="text-transform: none;"><span style="float:right;"><strong>Started:</strong> <em><?=$memlaststart?></em></span></th>
-<th style="text-transform: none;"><strong>Finished:</strong> <em><?=$memlastfinish?></em></th>
-<th style="text-transform: none;"><span style="float:right;"><strong>Refresh Output:</strong> <i id="memlogcontrol" class="fa fa-refresh fa-spin"></i></span></th>
+<th style="text-transform: none;"><span style="float:right;"><strong>Started:</strong> <em><?=$mem_laststart?></em></span></th>
+<th style="text-transform: none;"><strong>Finished:</strong> <em><?=$mem_lastfinish?></em></th>
+<th style="text-transform: none;"><span style="float:right;"><strong>Refresh:</strong> <i id="memlogcontrol" class="fa fa-refresh fa-spin"></i></span></th>
 </tr>
 <tr>
 <th><strong>SUMMARY OUTPUT (STDOUT)</strong></th>
-<th style="text-transform: none;"><span style="float:right;"><?=$mem_highram_html;?><strong>File Size:</strong> <span id="memsumsize"><?=$memlog_size;?></span></span></th>
+<th style="text-transform: none;"><span style="float:right;"><span class="memramwarning" style="margin-right:10px;color:red;display:none"><i class="fa fa-exclamation-triangle"></i> <strong>RAM Disk > 90% (No More Output Possible)</strong></span><strong>File Size:</strong> <span id="memsumsize"><?=$mem_log_size;?></span></span></th>
 <th><strong>DETAILED ERROR OUTPUT (STDERR)</strong></th>
-<th style="text-transform: none;"><span style="float:right;"><?=$mem_highram_html;?><strong>File Size:</strong> <span id="memerrsize"><?=$errlog_size;?></span></span></th>
+<th style="text-transform: none;"><span style="float:right;"><span class="memramwarning" style="margin-right:10px;color:red;display:none"><i class="fa fa-exclamation-triangle"></i> <strong>RAM Disk > 90% (No More Output Possible)</strong></span><strong>File Size:</strong> <span id="memerrsize"><?=$mem_errlog_size;?></span></span></th>
 </tr>
 <tbody>
 <tr>
 <td colspan="2"><span id="memlogviewer"><div style="text-align:center;"><i class="fa fa-spinner fa-spin"></i> <em>Please wait, retrieving information...</em><br><em>Note: If this panel does not load, there's too many lines to display.</em></div></span></td>
-<td colspan="2"><span id="errlogviewer"><div style="text-align:center;"><i class="fa fa-spinner fa-spin"></i> <em>Please wait, retrieving information...</em><br><em>Note: If this panel does not load, there's too many lines to display.</em></div></span></td>
+<td colspan="2"><span id="memerrlogviewer"><div style="text-align:center;"><i class="fa fa-spinner fa-spin"></i> <em>Please wait, retrieving information...</em><br><em>Note: If this panel does not load, there's too many lines to display.</em></div></span></td>
 </tr>
 </tbody>
 </table>
@@ -116,29 +89,29 @@ if($mem_disk_util !== "-") {
 </form>
 
 <script type="text/javascript">
-function getMemLogs() {
-    $.get('/plugins/dwmemtester/include/dwmemtester_log.php', function(data) {
+function GetRegularMemLogs() {
+    $.get('/plugins/dwmemtester/include/dwmemtester_log.php', {"type": "regular"}, function(data) {
         if (data) { 
             $('#memlogviewer').html(data); 
 	        var pre = $(".memlog");
 	        pre.scrollTop(pre.prop("scrollHeight"));
 	    }
     });
-    clearTimeout(timers.getMemLogs);
-    timers.getMemLogs = setTimeout(getMemLogs, 1000);
+    clearTimeout(timers.GetRegularMemLogs);
+    timers.GetRegularMemLogs = setTimeout(GetRegularMemLogs, 1000);
 }
-function getErrLogs() {
-    $.get('/plugins/dwmemtester/include/dwmemtester_errlog.php', function(data) {
+function GetErrorMemLogs() {
+    $.get('/plugins/dwmemtester/include/dwmemtester_log.php', {"type": "errors"}, function(data) {
         if (data) { 
-            $('#errlogviewer').html(data); 
-	        var pre2 = $(".errlog");
-	        pre2.scrollTop(pre2.prop("scrollHeight"));
+            $('#memerrlogviewer').html(data); 
+	        var pre = $(".memerrlog");
+	        pre.scrollTop(pre.prop("scrollHeight"));
 	    }
     });
-    clearTimeout(timers.getErrLogs);
-    timers.getErrLogs = setTimeout(getErrLogs, 1000);
+    clearTimeout(timers.GetErrorMemLogs);
+    timers.GetErrorMemLogs = setTimeout(GetErrorMemLogs, 1000);
 }
-function getMemStatus() {
+function GetMemStatus() {
     $.get('/plugins/dwmemtester/include/dwmemtester_status.php', {"getfs": "yes"}, function(data) {
         if (data) {
             var splitData = data.split(",");
@@ -155,30 +128,37 @@ function getMemStatus() {
                     $('.memrun').prop('disabled', false);
                     $('.memnotrun').prop('disabled', true);
                     $('#memlogcontrol').attr("class", "fa fa-refresh");
-                    clearTimeout(timers.getMemLogs);
-                    clearTimeout(timers.getErrLogs);
+                    clearTimeout(timers.GetRegularMemLogs);
+                    clearTimeout(timers.GetErrorMemLogs);
                 }
             }
             if(splitData[1]) {
-                $('#memsumsize').html(splitData[1]);
+                if(splitData[1] === "YES") {
+                    $('.memramwarning').show();
+                } else if (splitData[1] === "NO") {
+                    $('.memramwarning').hide();
+                }
             }
             if(splitData[2]) {
+                $('#memsumsize').html(splitData[1]);
+            }
+            if(splitData[3]) {
                 $('#memerrsize').html(splitData[2]);
             }
 	    }
     });
-    clearTimeout(timers.getMemStatus);
-    timers.getMemStatus = setTimeout(getMemStatus, 3000);
+    clearTimeout(timers.GetMemStatus);
+    timers.GetMemStatus = setTimeout(GetMemStatus, 3000);
 }
 function toggleMemLogs() {
     if($('#memlogcontrol').attr("class") == "fa fa-refresh fa-spin") {
         $('#memlogcontrol').attr("class", "fa fa-refresh");
-        clearTimeout(timers.getMemLogs);
-        clearTimeout(timers.getErrLogs);
+        clearTimeout(timers.GetRegularMemLogs);
+        clearTimeout(timers.GetErrorMemLogs);
     } else {
         $('#memlogcontrol').attr("class", "fa fa-refresh fa-spin");
-        getMemLogs();
-        getErrLogs();
+        GetRegularMemLogs();
+        GetErrorMemLogs();
     }
 }
 $(function()
@@ -211,8 +191,8 @@ $(function()
         $('#memcommands').submit();
     });
     $('#memlogcontrol').click(toggleMemLogs);
-    getMemStatus()
-    getMemLogs();
-    getErrLogs();
+    GetMemStatus()
+    GetRegularMemLogs();
+    GetErrorMemLogs();
 });
 </script>
