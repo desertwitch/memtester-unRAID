@@ -43,8 +43,8 @@ $memlastfinish = trim(file_exists("/var/log/memtester/lastfinish") ? htmlspecial
     <input type="text" class="narrow memrun" id="memsize" name="#arg[5]" placeholder="<memory>[B|K|M|G]" value="">
     <input type="text" class="narrow memrun" id="memloops" name="#arg[6]" placeholder="(optional) loops" value="">
     <input type="button" class="memrun" id="memstart" value="Start Operation">
-    <input type="text" class="narrow memrun" id="memhex" placeholder="(optional) starting point in hex" value="">
-    <input type="text" class="narrow memrun" id="memtarget" placeholder="(optional) target device e.g. /dev/mem" value="">
+    <input type="text" class="memrun" id="memhex" placeholder="(optional) starting point in hex" value="">
+    <input type="text" class="memrun" id="memtarget" placeholder="(optional) target device e.g. /dev/mem" value="">
 
     <span style="float:right;">
         <input type="button" class="memnotrun" id="memstop" value="Stop Operation">
