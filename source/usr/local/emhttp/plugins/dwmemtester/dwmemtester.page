@@ -24,7 +24,7 @@ $memlastfinish = trim(file_exists("/var/log/memtester/lastfinish") ? htmlspecial
 <table class="tablesorter shift" autofocus>
     <thead>
         <tr>
-            <th><i id="memstatusicon" class="fa fa-cog fa-spin" style="display:none;"></i> <strong>Memory Testing Operation Screen</strong></th>
+            <th><i id="memstatusicon" class="fa fa-cog fa-spin" style="display:none;"></i> <strong>Operation Screen</strong></th>
             <th style="text-transform: none;"><strong>Started:</strong> <em><?=$memlaststart?></em></th>
             <th style="text-transform: none;"><strong>Finished:</strong> <em><?=$memlastfinish?></em><span style="float:right;"><strong>Refresh:</strong> <i id="memlogcontrol" class="fa fa-refresh fa-spin"></i></span></th>
         </tr>
