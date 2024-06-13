@@ -25,6 +25,7 @@ echo ">> /usr/bin/memtester ${params[*]:1}" | tee /var/lib/memtester/errlog
 echo "" | tee -a /var/lib/memtester/errlog
 
 if [ "${params[0]}" == "1" ]; then
+    echo "Detailed error output was enabled, this panel will show any recorded errors." | tee -a /var/lib/memtester/errlog
     /usr/bin/memtester "${params[@]:1}" 1>>/var/lib/memtester/log 2>>/var/lib/memtester/errlog
     CMDRET=${PIPESTATUS[0]}
 else
