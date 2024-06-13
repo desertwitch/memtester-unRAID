@@ -26,13 +26,13 @@ function getMemFooter() {
     });
     clearTimeout(timers.getMemFooter);
     timers.getMemFooter = setTimeout(getMemFooter, 3000);
-    $('#snap_footer').click(function() {
+    $('#memtest_footer').click(function() {
         location = '/Settings/dwmemtester';
     });
 }
 $(function()
 {
-    var snap_footer = $("<span id='memtest_footer' style='display:none;color:red;'><i class='fa fa-microchip'></i><strong>Memory Testing</strong></span>").insertAfter("div#footer > span#copyright");
+    var mem_footer = $("<span id='memtest_footer' style='display:none;color:red;'><i class='fa fa-microchip'></i><strong> Memory Testing in Progress</strong></span>").insertAfter("div#footer > span#copyright");
     getMemFooter();
 });
 </script>
