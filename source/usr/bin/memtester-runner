@@ -2,6 +2,7 @@
 
 # shellcheck disable=SC2317
 signal_exit_memtest() {
+    echo "" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
     echo "=============================================================================================" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
     ENDDATE="$(date +"%d.%m.%Y %H:%M:%S %Z")"
     echo "${ENDDATE}" > /var/lib/memtester/lastfinish
@@ -37,6 +38,7 @@ else
     CMDRET=${PIPESTATUS[0]}
 fi
 
+echo "" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 echo "=============================================================================================" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 
 ENDDATE="$(date +"%d.%m.%Y %H:%M:%S %Z")"
