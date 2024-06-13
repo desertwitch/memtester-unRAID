@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "Stopping Operation..."
 killall memtester-runner
 killall memtester
 sleep 1
