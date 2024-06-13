@@ -50,7 +50,7 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
 <th style="text-transform: none;"><span style="float:right;"><strong>Refresh:</strong> <i id="memlogcontrol" class="fa fa-refresh fa-spin"></i></span></th>
 </tr>
 <tr>
-<th><strong>SUMMARY OUTPUT (STDOUT)</strong></th>
+<th><strong>SUMMARY STANDARD OUTPUT (STDOUT)</strong></th>
 <th style="text-transform: none;"><span style="float:right;"><span class="memramwarning" style="margin-right:10px;color:red;display:none"><i class="fa fa-exclamation-triangle"></i> <strong>RAM Disk Utilization > 90% (No More Output Possible)</strong></span><strong>File Size:</strong> <span id="memsumsize"><?=$mem_log_size;?></span></span></th>
 <th><strong>DETAILED ERROR OUTPUT (STDERR)</strong></th>
 <th style="text-transform: none;"><span style="float:right;"><span class="memramwarning" style="margin-right:10px;color:red;display:none"><i class="fa fa-exclamation-triangle"></i> <strong>RAM Disk Utilization > 90% (No More Output Possible)</strong></span><strong>File Size:</strong> <span id="memerrsize"><?=$mem_errlog_size;?></span></span></th>
@@ -95,7 +95,7 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
     <br>
     <input type="checkbox" id="memerrs" value="memerrs">
     <label for="memerrs" title="Not recommended, recording many thousands of errors can result in multiple GB logfiles and exceed the available RAM. There are safeguards in place so that the system will not crash even in such a case, but it is possible that no further log output can be written once that memory is exhausted." class="memtip">Write Detailed Error Output (<strong>Not Recommended</strong>)</label>   
-    <span style="float:right;margin-right:10px;">It is meant to either stress test your RAM or identify obvious problems in situations where a restart is not immediately possible.</span>
+    <span style="float:right;margin-right:10px;">It is meant to either stress test your RAM or identify obvious problems in situations where a restart is not (immediately) possible.</span>
     <br>
     <span style="float:right;margin-right:10px;">When selecting the amount of memory to test, please consider leaving some memory for the operating system to function.</span>
 </form>
