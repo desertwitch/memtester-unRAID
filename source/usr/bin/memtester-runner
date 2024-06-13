@@ -20,7 +20,7 @@ echo "$STARTDATE" > /var/lib/memtester/laststart
 trap signal_exit_memtest SIGTERM SIGINT 
 
 echo "[${STARTDATE}] /usr/bin/memtester ${params[*]:1}" | tee /var/lib/memtester/log /var/lib/memtester/errlog
-echo "################################################################" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+echo "=============================================================================================" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 echo "" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 
 if [ "${params[0]}" == "1" ]; then
@@ -35,23 +35,23 @@ else
     CMDRET=${PIPESTATUS[0]}
 fi
 
-echo "################################################################" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+echo "=============================================================================================" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 
 ENDDATE="$(date +"%d.%m.%Y %H:%M:%S %Z")"
 echo "$ENDDATE" > /var/lib/memtester/lastfinish
 
 if [ "$CMDRET" -eq 0 ]; then
-    printf "\n[%s] The operation has finished without errors !!!\n---> Return Code: %s." "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+    printf "[%s] The operation has finished without errors.\n[%s] Return Code: %s - OK." "${ENDDATE}" "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 elif [ "$CMDRET" -eq 1 ]; then
-    printf "\n[%s] The operation has finished with errors !!!\n---> Program Invocation or Memory Allocation Error / Return Code: %s." "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+    printf "[%s] The operation has finished with errors.\n[%s] Return Code: %s - Program Invocation or Memory Allocation Error." "${ENDDATE}" "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 elif [ "$CMDRET" -eq 2 ]; then
-    printf "\n[%s] The operation has finished with errors !!!\n---> Error during Stuck Address Test / Return Code: %s." "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+    printf "[%s] The operation has finished with errors.\n[%s] Return Code: %s - Error during Stuck Address Test." "${ENDDATE}" "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 elif [ "$CMDRET" -eq 4 ]; then
-    printf "\n[%s] The operation has finished with errors !!!\n---> Error during Test(s) / Return Code: %s." "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+    printf "[%s] The operation has finished with errors.\n[%s] Return Code: %s - Error during Test(s)." "${ENDDATE}" "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 elif [ "$CMDRET" -eq 6 ]; then
-    printf "\n[%s] The operation has finished with errors !!!\n---> Error during Stuck Address Test + Other Test(s) / Return code: %s." "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+    printf "[%s] The operation has finished with errors.\n[%s] Return Code: %s - Error during Stuck Address Test + Other Test(s)." "${ENDDATE}" "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 else
-    printf "\n[%s] The operation has finished with errors !!!\n---> Check Operation Output for Details / Return Code: %s." "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+    printf "[%s] The operation has finished with errors.\n[%s] Return Code: %s - Check Operation Output for Details." "${ENDDATE}" "${ENDDATE}" "${CMDRET}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 fi
 
 exit 0
