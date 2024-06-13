@@ -1,3 +1,3 @@
-**Library Checker for UNRAID**
+**Memory Tester for UNRAID**
 
-A diagnostic plugin that checks for missing libraries in packages installed on the system.
+A diagnostic plugin that checks the memory on your running system.
