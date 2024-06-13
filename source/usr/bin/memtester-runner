@@ -29,10 +29,14 @@ elif [ "$CMDRET" -eq 1 ]; then
     printf "\nThe operation has finished with errors (allocating or locking memory, or invocation error / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/errlog
 elif [ "$CMDRET" -eq 2 ]; then
     printf "\nThe operation has finished with errors (error during stuck address test / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/log
-        printf "\nThe operation has finished with errors (error during stuck address test / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/errlog
+    printf "\nThe operation has finished with errors (error during stuck address test / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/errlog
 elif [ "$CMDRET" -eq 4 ]; then
-    printf "\nThe operation has finished with errors (error during one of the tests / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/log
-        printf "\nThe operation has finished with errors (error during one of the tests / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/errlog
+    printf "\nThe operation has finished with errors (error during test(s) / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/log
+    printf "\nThe operation has finished with errors (error during test(s) / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/errlog
+elif [ "$CMDRET" -eq 6 ]; then
+    printf "\nThe operation has finished with errors (error during stuck address test + other test(s) / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/log
+    printf "\nThe operation has finished with errors (error during stuck address test + other test(s) / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/errlog
+
 else
     printf "\nThe operation has finished with errors (check operation output / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/log
     printf "\nThe operation has finished with errors (check operation output / return code: %s)." "${CMDRET}" | tee -a /var/lib/memtester/errlog
