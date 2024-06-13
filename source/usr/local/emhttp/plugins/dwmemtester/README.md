@@ -1,3 +1,3 @@
-**Memory Tester for UNRAID**
+**Memory Testing for UNRAID**
 
-A diagnostic plugin that checks the memory on your running system.
+A diagnostic plugin that lets you test your memory live and without rebooting.

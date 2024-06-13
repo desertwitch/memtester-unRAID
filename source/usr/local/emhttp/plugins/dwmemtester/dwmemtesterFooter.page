@@ -36,7 +36,7 @@ function GetMemFooter() {
     clearTimeout(timers.GetMemFooter);
     timers.GetMemFooter = setTimeout(GetMemFooter, 3000);
     $('#memtest_footer').click(function() {
-        location = '/Settings/dwmemtester';
+        location = '/Settings/dwmemtesterOps';
     });
 }
 $(function()

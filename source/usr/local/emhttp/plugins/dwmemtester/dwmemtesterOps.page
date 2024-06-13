@@ -1,6 +1,6 @@
 Menu="Utilities"
 Type="xmenu"
-Title="Memory Tester"
+Title="Memory Testing"
 Icon="microchip"
 Tag="microchip"
 Markdown="false"
@@ -134,7 +134,7 @@ function GetMemStatus() {
                     $('.memnotrun').prop('disabled', false);
                 } else if (splitData[0] === "RUNNING:NO") {
                     if($('#memstatusicon').is(":visible")) {
-                        location = '/Settings/dwmemtester';
+                        location = '/Settings/dwmemtesterOps';
                     }
                     $('#memstatusicon').hide();
                     $('.memrun').prop('disabled', false);
