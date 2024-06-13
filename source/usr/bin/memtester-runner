@@ -29,7 +29,7 @@ if [ "${params[0]}" == "1" ]; then
     /usr/bin/memtester "${params[@]:1}" 1>>/var/lib/memtester/log 2>>/var/lib/memtester/errlog
     CMDRET=${PIPESTATUS[0]}
 else
-    echo "Detailed error output was disabled, please see left panel for testing summaries." | tee -a /var/lib/memtester/errlog
+    echo "Detailed error output was disabled, please refer to the left panel for testing summaries." | tee -a /var/lib/memtester/errlog
     /usr/bin/memtester "${params[@]:1}" 1>>/var/lib/memtester/log 2>/dev/null
     CMDRET=${PIPESTATUS[0]}
 fi
