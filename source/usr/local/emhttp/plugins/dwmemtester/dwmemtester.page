@@ -72,26 +72,32 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
     <input type="hidden" id="arg5" name="#arg[5]" value="">
     <input type="hidden" id="arg6" name="#arg[6]" value="">
 
-    <input type="text" class="narrow memrun" id="memsize" name="#arg[7]" placeholder="<memory>[B|K|M|G]" value="">
-    <input type="text" class="narrow memrun" id="memloops" name="#arg[8]" placeholder="(optional) loops" value="">
+    
+    <input type="text" title="The amount of memory to test (e.g. 5G). A number without a unit is assumed as MB. When selecting the amount of memory to test, please consider leaving some memory for the operating system to still function." class="memtip narrow memrun" id="memsize" name="#arg[7]" placeholder="<memory>[B|K|M|G]" value="">
+    <span>&#91;</span>
+    <input type="text" title="The amount of loops the memory testing should run for, it will continue indefinitely if none are specified (until stopped)." class="memtip narrow memrun" style="margin:0 0 0 0;" id="memloops" name="#arg[8]" placeholder="(optional) loops" value="">
+    <span style="margin-right:20px">&#93;</span>
     <input type="button" class="memrun" id="memstart" value="Start Operation">
-    <input type="text" class="memrun" id="memhex" placeholder="(optional) hex starting point" value="">
-    <input type="text" class="memrun" id="memtarget" placeholder="(optional) target device" value="">
-
+    <span>&#91;</span>
+    <input type="text" title="For advanced testing: Selects a starting point in memory, expects hexadecimal format. A target device must also be selected." class="memtip memrun" style="margin:0 0 0 0;" id="memhex" placeholder="(optional) hex starting point" value="">
+    <span>&amp;</span>
+    <input type="text" title="For advanced testing: Selects a memory device, expects a device path (e.g. /dev/mnt). A starting point must also be selected." class="memtip memrun" style="margin:0 0 0 0;" id="memtarget" placeholder="(optional) target device" value="">
+    <span>&#93;</span>
     <span style="float:right;">
         <input type="button" class="memrun" id="memclear" value="Clear Logs">
         <input type="button" class="memnotrun" id="memstop" value="Stop Operation">
         <input type="button" class="memnotrun" id="memkill" value="Kill Operation">
-    </span><br><br>
+    </span><br>
 
     <input type="checkbox" id="memnotify" value="memnotify">
-    <label for="memnotify">Notify on Operation Complete</label> 
+    <label for="memnotify" title="Once the operation completes, a notification is sent using Unraid's general notification settings with the result of the operation." class="memtip">Notify on Operation Complete</label> 
     <span style="float:right;margin-right:10px;"><strong>This program cannot test all of your memory at once, it is therefore not a replacement for a proper <a href="https://www.memtest86.com/download.htm" target="_blank">MemTest86</a> session.</strong></span>
     <br>
     <input type="checkbox" id="memerrs" value="memerrs">
-    <label for="memerrs">Write Detailed Error Output (<strong>Not Recommended</strong>)</label>   
+    <label for="memerrs" title="Not recommended, recording many thousands of errors can result in multiple GB logfiles and exceed the available RAM. There are safeguards in place so that the system will not crash even in such a case, but it is possible that no further log output can be written once that memory is exhausted." class="memtip">Write Detailed Error Output (<strong>Not Recommended</strong>)</label>   
     <span style="float:right;margin-right:10px;">It is meant to either stress test your RAM or identify obvious problems in situations where a restart is not immediately possible.</span>
-    
+    <br>
+    <span style="float:right;margin-right:10px;">When selecting the amount of memory to test, please consider leaving some memory for the operating system to function.</span>
 </form>
 
 <script type="text/javascript">
@@ -204,8 +210,12 @@ $(function()
         $('#memcommands').submit();
     });
     $('#memlogcontrol').click(toggleMemLogs);
+    $('.memtip').tooltipster({
+        maxWidth: 300
+    });
     GetMemStatus()
     GetRegularMemLogs();
     GetErrorMemLogs();
+    showStatus('memtester');
 });
 </script>
