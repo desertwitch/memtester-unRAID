@@ -18,7 +18,6 @@ $memlastfinish = trim(file_exists("/var/log/memtester/lastfinish") ? htmlspecial
     word-break: normal !important;
     word-wrap: normal !important;
     white-space: pre !important;
-    font-size: x-small;
 }
 </style>
 
