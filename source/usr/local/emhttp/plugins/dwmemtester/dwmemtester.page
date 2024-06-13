@@ -87,7 +87,7 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
     <input type="checkbox" id="memerrs" value="memerrs">
     <label for="memerrs">Write Detailed Error Output (<strong>Not Recommended</strong>)</label>   
 
-    <input type="checkbox" id="memnotify" value="memnotify" style="margin-left:10px;">
+    <input type="checkbox" id="memnotify" value="memnotify" style="margin-left:20px;">
     <label for="memnotify">Notify on Operation Complete</label> 
 
 </form>
@@ -168,22 +168,26 @@ function toggleMemLogs() {
 $(function()
 {
     $('#memstart').click(function(){
-        $('#memcommand').val('/usr/local/emhttp/plugins/dwmemtester/scripts/start');
-        if($('#memerrs').is(':checked')) {
-            $('#arg1').val('1');
+        if($('#memsize').val()) {
+            $('#memcommand').val('/usr/local/emhttp/plugins/dwmemtester/scripts/start');
+            if($('#memerrs').is(':checked')) {
+                $('#arg1').val('1');
+            }
+            if($('#memnotify').is(':checked')) {
+                $('#arg2').val('1');
+            }    
+            if($('#memhex').val()) {
+                $('#arg3').val('-p');
+                $('#arg4').val($('#memhex').val());
+            }
+            if($('#memtarget').val()) {
+                $('#arg5').val('-d');
+                $('#arg6').val($('#memtarget').val());
+            }
+            $('#memcommands').submit();
+        } else {
+            swal("Operation Failure", "You need to select an amount of memory to test.", "error");
         }
-        if($('#memnotify').is(':checked')) {
-            $('#arg2').val('1');
-        }    
-        if($('#memhex').val()) {
-            $('#arg3').val('-p');
-            $('#arg4').val($('#memhex').val());
-        }
-        if($('#memtarget').val()) {
-            $('#arg5').val('-d');
-            $('#arg6').val($('#memtarget').val());
-        }
-        $('#memcommands').submit();
     });
     $('#memclear').click(function(){
         $('#memcommand').val('/usr/local/emhttp/plugins/dwmemtester/scripts/clear');
