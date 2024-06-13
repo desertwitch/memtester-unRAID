@@ -78,9 +78,9 @@ if($mem_disk_util !== "-") {
 </tr>
 <tr>
 <th><strong>SUMMARY OUTPUT (STDOUT)</strong></th>
-<th style="text-transform: none;"><span style="float:right;"><?=$mem_highram_html;?><strong>File Size (Static):</strong> <?=$memlog_size;?></span></th>
+<th style="text-transform: none;"><span style="float:right;"><?=$mem_highram_html;?><strong>File Size (Static):</strong> <span id="memsumsize"><?=$memlog_size;?></span></span></th>
 <th><strong>DETAILED ERROR OUTPUT (STDERR)</strong></th>
-<th style="text-transform: none;"><span style="float:right;"><?=$mem_highram_html;?><strong>File Size (Static):</strong> <?=$errlog_size;?></span></th>
+<th style="text-transform: none;"><span style="float:right;"><?=$mem_highram_html;?><strong>File Size (Static):</strong> <span id="memerrsize"><?=$errlog_size;?></span></span></th>
 </tr>
 <tbody>
 <tr>
@@ -116,6 +116,30 @@ if($mem_disk_util !== "-") {
 </form>
 
 <script type="text/javascript">
+function humanFileSize(sizeObj, unit = "") {
+    try {
+        const size = parseInt(sizeObj, 10);
+        if (size) {
+            if ((!unit && size >= (1 << 40)) || unit === "TB") {
+                return (size / (1 << 40)).toFixed(2) + " TB";
+            }
+            if ((!unit && size >= (1 << 30)) || unit === "GB") {
+                return (size / (1 << 30)).toFixed(2) + " GB";
+            }
+            if ((!unit && size >= (1 << 20)) || unit === "MB") {
+                return (size / (1 << 20)).toFixed(2) + " MB";
+            }
+            if ((!unit && size >= (1 << 10)) || unit === "KB") {
+                return (size / (1 << 10)).toFixed(2) + " KB";
+            }
+            return size.toLocaleString() + " B";
+        } else {
+            return false;
+        }
+    } catch (e) {
+        return false;
+    }
+}
 function getMemLogs() {
     $.get('/plugins/dwmemtester/include/dwmemtester_log.php', function(data) {
         if (data) { 
@@ -141,20 +165,35 @@ function getErrLogs() {
 function getMemStatus() {
     $.get('/plugins/dwmemtester/include/dwmemtester_status.php', function(data) {
         if (data) {
-            if(data === "RUNNING:YES") {
-                $('#memstatusicon').show();
-                $('.memrun').prop('disabled', true);
-                $('.memnotrun').prop('disabled', false);
-            } else if (data === "RUNNING:NO") {
-                if($('#memstatusicon').is(":visible")) {
-                    location = '/Settings/dwmemtester';
+            var splitData = data.split(",");
+            if(splitData[0]) {
+                if(data === "RUNNING:YES") {
+                    $('#memstatusicon').show();
+                    $('.memrun').prop('disabled', true);
+                    $('.memnotrun').prop('disabled', false);
+                } else if (data === "RUNNING:NO") {
+                    if($('#memstatusicon').is(":visible")) {
+                        location = '/Settings/dwmemtester';
+                    }
+                    $('#memstatusicon').hide();
+                    $('.memrun').prop('disabled', false);
+                    $('.memnotrun').prop('disabled', true);
+                    $('#memlogcontrol').attr("class", "fa fa-refresh");
+                    clearTimeout(timers.getMemLogs);
+                    clearTimeout(timers.getErrLogs);
                 }
-                $('#memstatusicon').hide();
-                $('.memrun').prop('disabled', false);
-                $('.memnotrun').prop('disabled', true);
-                $('#memlogcontrol').attr("class", "fa fa-refresh");
-                clearTimeout(timers.getMemLogs);
-                clearTimeout(timers.getErrLogs);
+            }
+            if(splitData[1]) {
+                var retFileSize = humanFileSize(splitData[1]);
+                if(retFileSize) {
+                    $('#memsumsize').html(retFileSize);
+                }
+            }
+            if(splitData[2]) {
+                var retFileSize = humanFileSize(splitData[2]);
+                if(retFileSize) {
+                    $('#memerrsize').html(retFileSize);
+                }
             }
 	    }
     });
