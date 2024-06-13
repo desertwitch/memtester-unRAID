@@ -78,9 +78,9 @@ if($mem_disk_util !== "-") {
 </tr>
 <tr>
 <th><strong>SUMMARY OUTPUT (STDOUT)</strong></th>
-<th style="text-transform: none;"><span style="float:right;"><?=$mem_highram_html;?><strong>File Size (Static):</strong> <span id="memsumsize"><?=$memlog_size;?></span></span></th>
+<th style="text-transform: none;"><span style="float:right;"><?=$mem_highram_html;?><strong>File Size:</strong> <span id="memsumsize"><?=$memlog_size;?></span></span></th>
 <th><strong>DETAILED ERROR OUTPUT (STDERR)</strong></th>
-<th style="text-transform: none;"><span style="float:right;"><?=$mem_highram_html;?><strong>File Size (Static):</strong> <span id="memerrsize"><?=$errlog_size;?></span></span></th>
+<th style="text-transform: none;"><span style="float:right;"><?=$mem_highram_html;?><strong>File Size:</strong> <span id="memerrsize"><?=$errlog_size;?></span></span></th>
 </tr>
 <tbody>
 <tr>
