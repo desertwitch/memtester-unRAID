@@ -55,7 +55,7 @@ echo "$STARTDATE" > /var/lib/memtester/laststart
 
 trap signal_exit_memtest SIGTERM SIGINT 
 
-echo "[${STARTDATE}] /usr/bin/memtester ${params[*]:2}" | tee -a var/lib/memtester/log /var/lib/memtester/errlog
+echo "[${STARTDATE}] /usr/bin/memtester ${params[*]:2}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 echo "=============================================================================================" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 echo "" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 
