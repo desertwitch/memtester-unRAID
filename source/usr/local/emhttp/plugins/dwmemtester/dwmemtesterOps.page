@@ -90,7 +90,7 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
     </span><br>
 
     <input type="checkbox" id="memnotify" value="memnotify">
-    <label for="memnotify" title="Once the operation completes, a notification is sent using Unraid's general notification settings with the result of the operation." class="memtip">Notify on Operation Complete</label> 
+    <label for="memnotify" title="Once the operation completes, a notification is sent using Unraid's general notification settings with the result of the operation." class="memtip">Notification on Operation Complete</label> 
     <span style="float:right;margin-right:10px;"><strong>This program cannot test all of your memory at once, it is therefore not a replacement for a proper <a href="https://www.memtest86.com/download.htm" target="_blank">MemTest86</a> session.</strong></span>
     <br>
     <input type="checkbox" id="memerrs" value="memerrs">
