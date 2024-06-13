@@ -74,6 +74,7 @@ $errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialchars(
     <input type="text" class="memrun" id="memtarget" placeholder="(optional) target device" value="">
 
     <span style="float:right;">
+        <input type="button" class="memrun" id="memclear" value="Clear Logs">
         <input type="button" class="memnotrun" id="memstop" value="Stop Operation">
         <input type="button" class="memnotrun" id="memkill" value="Kill Operation">
     </span><br>
@@ -149,6 +150,10 @@ $(function()
             $('#arg3').val('-d');
             $('#arg4').val($('#memtarget').val());
         }
+        $('#memcommands').submit();
+    });
+    $('#memclear').click(function(){
+        $('#memcommand').val('/usr/local/emhttp/plugins/dwmemtester/scripts/clear');
         $('#memcommands').submit();
     });
     $('#memstop').click(function(){
