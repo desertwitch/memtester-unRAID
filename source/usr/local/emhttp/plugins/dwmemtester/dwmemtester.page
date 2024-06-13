@@ -12,8 +12,8 @@ $memlastfinish = trim(file_exists("/var/log/memtester/lastfinish") ? htmlspecial
 
 <style type="text/css">
 .memlog {
-    height: 600px;
-    max-height: 600px;
+    height: 450px;
+    max-height: 450px;
     overflow: auto;
     word-break: normal !important;
     word-wrap: normal !important;
@@ -36,7 +36,7 @@ $memlastfinish = trim(file_exists("/var/log/memtester/lastfinish") ? htmlspecial
 
 <form markdown="0" id="memcommands" name="memcommands" method="POST" action="/update.php" target="progressFrame">
     <input type="hidden" id="memcommand" name="#command" value="/usr/local/emhttp/plugins/dwmemtester/scripts/start">
-    <input type="hidden" id="memarg1" name="#arg[1]" value="10M">
+    <input type="hidden" id="memarg1" name="#arg[1]" value="1G">
     <input type="hidden" id="memarg2" name="#arg[2]" value="1">
     <input type="submit" class="memrun" id="btnApply" name="#apply" value="Start Testing">
 </form>
