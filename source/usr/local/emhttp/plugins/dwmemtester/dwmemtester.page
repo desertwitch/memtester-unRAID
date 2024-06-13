@@ -17,8 +17,8 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
 
 <style type="text/css">
 .memlog {
-    height: 450px;
-    max-height: 450px;
+    height: 400px;
+    max-height: 400px;
     width: 100%;
     max-width: 100%;
     overflow: auto;
@@ -27,8 +27,8 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
     white-space: pre !important;
 }
 .memerrlog {
-    height: 450px;
-    max-height: 450px;
+    height: 400px;
+    max-height: 400px;
     width: 100%;
     max-width: 100%;
     overflow: auto;
@@ -82,14 +82,16 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
         <input type="button" class="memrun" id="memclear" value="Clear Logs">
         <input type="button" class="memnotrun" id="memstop" value="Stop Operation">
         <input type="button" class="memnotrun" id="memkill" value="Kill Operation">
-    </span><br>
+    </span><br><br>
 
+    <input type="checkbox" id="memnotify" value="memnotify">
+    <label for="memnotify">Notify on Operation Complete</label> 
+    <span style="float:right;margin-right:10px;"><strong>This program cannot test all of your memory at once, it is therefore not a replacement for a proper <a href="https://www.memtest86.com/download.htm" target="_blank">MemTest86</a> session.</strong></span>
+    <br>
     <input type="checkbox" id="memerrs" value="memerrs">
     <label for="memerrs">Write Detailed Error Output (<strong>Not Recommended</strong>)</label>   
-
-    <input type="checkbox" id="memnotify" value="memnotify" style="margin-left:20px;">
-    <label for="memnotify">Notify on Operation Complete</label> 
-
+    <span style="float:right;margin-right:10px;">It is meant to either stress test your RAM or identify obvious problems in situations where a restart is not immediately possible.</span>
+    
 </form>
 
 <script type="text/javascript">
