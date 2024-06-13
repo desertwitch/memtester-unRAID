@@ -14,6 +14,8 @@ $memlastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecial
 .memlog {
     height: 450px;
     max-height: 450px;
+    width: 50%;
+    max-width: 50%;
     overflow: auto;
     word-break: normal !important;
     word-wrap: normal !important;
@@ -22,6 +24,8 @@ $memlastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecial
 .errlog {
     height: 450px;
     max-height: 450px;
+    width: 50%;
+    max-width: 50%;
     overflow: auto;
     word-break: normal !important;
     word-wrap: normal !important;
@@ -39,11 +43,20 @@ $memlastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecial
     </thead>
 </table>
 
-<table>
+<br>
+
+<table class="tablesorter">
+<thead>
+<tr>
+<th>REGULAR OUTPUT</th>
+<th>ERROR OUTPUT</th>
+</tr>
+<tbody>
 <tr>
 <td><span id="memlogviewer"><div style="text-align:center;"><i class="fa fa-spinner fa-spin"></i> <em>Please wait, retrieving information...</em></div></span></td>
 <td><span id="errlogviewer"><div style="text-align:center;"><i class="fa fa-spinner fa-spin"></i> <em>Please wait, retrieving information...</em></div></span></td>
 </tr>
+</tbody>
 </table>
 
 <form markdown="0" id="memcommands" name="memcommands" method="POST" action="/update.php" target="progressFrame">
