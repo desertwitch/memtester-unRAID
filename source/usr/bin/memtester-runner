@@ -5,8 +5,7 @@ signal_exit_memtest() {
     echo "=============================================================================================" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
     ENDDATE="$(date +"%d.%m.%Y %H:%M:%S %Z")"
     echo "${ENDDATE}" > /var/lib/memtester/lastfinish
-    printf "[%s] The operation was interrupted and has not finished." "${ENDDATE}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
-    printf "[%s] Code: SIGTERM - Program Interrupt." "${ENDDATE}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+    printf "[%s] The operation was interrupted and has not finished.\n[%s] Code: SIGTERM - Program Interrupt." "${ENDDATE}" "${ENDDATE}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
     exit 1
 }
 
