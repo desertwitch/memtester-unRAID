@@ -81,7 +81,7 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
     <span>&#91;</span>
     <input type="text" title="For advanced testing: Selects a starting point in memory, expects hexadecimal format. A target device must also be selected." class="memtip memrun" style="margin:0 0 0 0;" id="memhex" placeholder="(optional) hex starting point" value="">
     <span>&amp;</span>
-    <input type="text" title="For advanced testing: Selects a memory device, expects a device path (e.g. /dev/mnt). A starting point must also be selected." class="memtip memrun" style="margin:0 0 0 0;" id="memtarget" placeholder="(optional) target device" value="">
+    <input type="text" title="For advanced testing: Selects a memory device, expects a device path (e.g. /dev/mem). A starting point must also be selected." class="memtip memrun" style="margin:0 0 0 0;" id="memtarget" placeholder="(optional) target device" value="">
     <span>&#93;</span>
     <span style="float:right;">
         <input type="button" class="memrun" id="memclear" value="Clear Logs">
