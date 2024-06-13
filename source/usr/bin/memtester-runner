@@ -2,7 +2,7 @@
 
 # shellcheck disable=SC2317
 signal_exit_memtest() {
-    printf "\n\nOPERATION WAS INTERRUPTED [SIGTERM/SIGINT]"
+    printf "\n\nOPERATION WAS INTERRUPTED [SIGTERM/SIGINT]" > /var/log/memtester/log
     date +"%d.%m.%Y %H:%M:%S %Z" > /var/log/memtester/lastfinish
     exit 1
 }
