@@ -2,7 +2,7 @@
 
 # shellcheck disable=SC2317
 signal_exit_memtest() {
-    printf "\nThe operation was interrupted by a SIGTERM or SIGINT that was received." >> /var/log/memtester/log
+    printf "\nThe operation was interrupted by a SIGTERM or SIGINT that was received." | tee -a /var/log/memtester/log
     date +"%d.%m.%Y %H:%M:%S %Z" > /var/log/memtester/lastfinish
     exit 1
 }
@@ -13,20 +13,20 @@ rm -f /var/log/memtester/laststart
 rm -f /var/log/memtester/lastfinish
 date +"%d.%m.%Y %H:%M:%S %Z" > /var/log/memtester/laststart
 trap signal_exit_memtest SIGTERM SIGINT 
-echo "/usr/bin/memtester ${params[*]}"
-echo ""
-/usr/bin/memtester "${params[@]}" 2>&1 | tee /var/log/memtester/log
+echo "/usr/bin/memtester ${params[*]}" | tee /var/log/memtester/log
+echo "" | tee -a /var/log/memtester/log
+/usr/bin/memtester "${params[@]}" 2>&1 | tee -a /var/log/memtester/log
 CMDRET=${PIPESTATUS[0]}
 if [ "$CMDRET" -eq 0 ]; then
-    printf "\nThe operation has finished without errors (return code: %s)." "${CMDRET}" >> /var/log/memtester/log
+    printf "\nThe operation has finished without errors (return code: %s)." "${CMDRET}" | tee -a /var/log/memtester/log
 elif [ "$CMDRET" -eq 1 ]; then
-    printf "\nThe operation has finished with errors (allocating or locking memory, or invocation error / return code: %s)." "${CMDRET}" >> /var/log/memtester/log
+    printf "\nThe operation has finished with errors (allocating or locking memory, or invocation error / return code: %s)." "${CMDRET}" | tee -a /var/log/memtester/log
 elif [ "$CMDRET" -eq 2 ]; then
-    printf "\nThe operation has finished with errors (error during stuck address test / return code: %s)." "${CMDRET}" >> /var/log/memtester/log
+    printf "\nThe operation has finished with errors (error during stuck address test / return code: %s)." "${CMDRET}" | tee -a /var/log/memtester/log
 elif [ "$CMDRET" -eq 4 ]; then
-    printf "\nThe operation has finished with errors (error during one of the tests / return code: %s)." "${CMDRET}" >> /var/log/memtester/log
+    printf "\nThe operation has finished with errors (error during one of the tests / return code: %s)." "${CMDRET}" | tee -a /var/log/memtester/log
 else
-    printf "\nThe operation has finished with errors (check operation output / return code: %s)." "${CMDRET}" >> /var/log/memtester/log
+    printf "\nThe operation has finished with errors (check operation output / return code: %s)." "${CMDRET}" | tee -a /var/log/memtester/log
 fi
 date +"%d.%m.%Y %H:%M:%S %Z" > /var/log/memtester/lastfinish
 exit 0
