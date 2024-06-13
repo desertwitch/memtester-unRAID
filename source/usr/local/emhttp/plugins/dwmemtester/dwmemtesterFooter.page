@@ -10,9 +10,6 @@ Link="nav-user"
     color: red;
     display: none;
 }
-#memtest_footer i {
-    margin-right: 5px;
-}
 </style>
 
 <script type="text/javascript">

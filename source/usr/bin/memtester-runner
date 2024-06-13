@@ -2,8 +2,11 @@
 
 # shellcheck disable=SC2317
 signal_exit_memtest() {
-    printf "\nThe operation was interrupted by a SIGTERM or SIGINT that was received." | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
-    date +"%d.%m.%Y %H:%M:%S %Z" > /var/lib/memtester/lastfinish
+    echo "=============================================================================================" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+    ENDDATE="$(date +"%d.%m.%Y %H:%M:%S %Z")"
+    echo "${ENDDATE}" > /var/lib/memtester/lastfinish
+    printf "[%s] The operation was interrupted and has not finished." "${ENDDATE}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
+    printf "[%s] Code: SIGTERM - Program Interrupt." "${ENDDATE}" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
     exit 1
 }
 
