@@ -55,7 +55,7 @@ run the post-installation scripts
 <INLINE> 
 echo ""
 echo "-----------------------------------------------------------"
-echo " Live Memory Testing for UNRAID has been removed."
+echo " Live Memory Testing for UNRAID has been installed."
 echo " Version: &version; / Plugin Maintainer: &author;"
 echo "-----------------------------------------------------------"
 echo ""
