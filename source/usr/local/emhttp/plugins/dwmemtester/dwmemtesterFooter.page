@@ -1,0 +1,38 @@
+Menu="Buttons:196"
+Link="nav-user"
+---
+<style type="text/css">
+#memtest_footer {
+    float: right;
+    margin-right: 24px;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+#memtest_footer i {
+    margin-left: 5px;
+}
+</style>
+
+<script type="text/javascript">
+function getMemFooter() {
+    $.get('/plugins/dwmemtester/include/dwmemtester_status.php', function(data) {
+        if (data) {
+            if(data === "RUNNING:YES") {
+                $('#memtest_footer').show();
+            } else if (data === "RUNNING:NO") {
+                $('#memtest_footer').hide();
+            }
+	    }
+    });
+    clearTimeout(timers.getMemFooter);
+    timers.getMemFooter = setTimeout(getMemFooter, 3000);
+    $('#snap_footer').click(function() {
+        location = '/Settings/dwmemtester';
+    });
+}
+$(function()
+{
+    var snap_footer = $("<span id='memtest_footer' style='display:none;color:red;'><i class='fa fa-microchip'></i><strong>Memory Testing</strong></span>").insertAfter("div#footer > span#copyright");
+    getMemFooter();
+});
+</script>
