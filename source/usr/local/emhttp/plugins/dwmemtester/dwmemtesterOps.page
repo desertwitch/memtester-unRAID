@@ -55,6 +55,7 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
 <th><strong>DETAILED ERROR OUTPUT (STDERR)</strong></th>
 <th style="text-transform: none;"><span style="float:right;"><span class="memramwarning" style="margin-right:10px;color:red;display:none"><i class="fa fa-exclamation-triangle"></i> <strong>RAM Disk Utilization > 90% (No More Output Possible)</strong></span><strong>File Size:</strong> <span id="memerrsize"><?=$mem_errlog_size;?></span></span></th>
 </tr>
+</thead>
 <tbody>
 <tr>
 <td colspan="2"><span id="memlogviewer"><div style="text-align:center;"><i class="fa fa-spinner fa-spin"></i> <em>Please wait, retrieving information...</em><br><em>Note: If this panel does not load, there's too many lines to display.</em></div></span></td>
