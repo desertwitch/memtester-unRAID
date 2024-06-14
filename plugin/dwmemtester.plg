@@ -35,9 +35,9 @@ exit 0
 <!--
 install or upgrade dependency files
 -->
-<FILE Name="&plgPATH;/memtester-4.6.0_1-x86_64-1_dw.txz" Min="6.8.3" Run="upgradepkg --install-new">
-<URL>&pkgURL;/memtester-4.6.0_1-x86_64-1_dw.txz</URL>
-<MD5>eb2c13ce4250deafa8e72b43665a0d1a</MD5>
+<FILE Name="&plgPATH;/memtester-4.6.0_1-x86_64-2_dw.txz" Min="6.8.3" Run="upgradepkg --install-new">
+<URL>&pkgURL;/memtester-4.6.0_1-x86_64-2_dw.txz</URL>
+<MD5>bfedfe573dcda3875e5c12c5ffef9a9d</MD5>
 </FILE>
 
 <!--
