@@ -23,7 +23,7 @@ if ! mountpoint -q /var/lib/memtester; then
     rm -rf /var/lib/memtester
     mkdir -p /var/lib/memtester
     if ! mount -t tmpfs -o size=30% tmpfs /var/lib/memtester; then
-        echo "[ERROR] Failed to create a RAM disk for memtester, falling back to a regular folder." | logger -t "memtester-installer"
+        echo "[ERROR] Failed to create a RAM disk, falling back to a regular folder." | logger -t "memtester-plugin"
     fi
 fi
 
