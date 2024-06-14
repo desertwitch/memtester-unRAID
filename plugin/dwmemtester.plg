@@ -3,14 +3,14 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "dwmemtester">
 <!ENTITY author    "desertwitch">
-<!ENTITY version   "2024.06.14b">
+<!ENTITY version   "2024.06.14c">
 <!ENTITY launch    "Settings/dwmemtesterOps">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/&author;/memtester-unRAID/main">
 <!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
 <!ENTITY pkgURL    "&gitURL;/packages">
 <!ENTITY plgPATH   "/boot/config/plugins/&name;">
-<!ENTITY plgNAME   "dwmemtester-2024.06.14-x86_64-3">
-<!ENTITY plgMD5    "15b153c54d87446ccee8483eca4ea40e">
+<!ENTITY plgNAME   "dwmemtester-2024.06.14-x86_64-4">
+<!ENTITY plgMD5    "c1c206d7e49a6d810264a8e2334fcc4e">
 <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
 
