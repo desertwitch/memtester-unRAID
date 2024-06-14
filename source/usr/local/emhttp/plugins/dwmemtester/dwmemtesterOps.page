@@ -208,8 +208,8 @@ $(function()
             var displayMemTest = /[BKMG]/;
             if(!displayMemTest.test(displayMemSize)) { displayMemSize = displayMemSize + "M"; }
             swal({
-                title: "Ready for Testing",
-                text: "<span style='font-weight:bold'>Selected Memory: " + displayMemSize + "</span><br><br>The memory testing is about to start, you may notice your system slow down during the testing process. Please make sure you have not selected all available memory and have left a bit of memory for the system to still function while the memory testing is in progress.<br><br><span style='font-weight:bold;color:red;'>When testing memory, it is always recommended to stop any arrays/pools first to avoid problems due to found RAM errors or starvation.</span>",
+                title: "Ready for Testing?",
+                text: "<span style='font-weight:bold'>Selected Memory: " + displayMemSize + "</span><br><br>The memory testing is about to start, you may notice your system slow down during the testing process. Please make sure you have not selected all available memory and have left a bit of memory for the system to still function while the memory testing is in progress.<br><br>When testing memory, it is usually recommended to stop any arrays/pools first to avoid problems due to found RAM errors or starvation.",
                 type: "info",
                 showCancelButton: true,
                 confirmButtonText: "Start Testing",
@@ -261,7 +261,7 @@ $(function()
     if ($.cookie('dwmemwarning')===undefined) {
         swal({
             title: "Plugin Disclaimer",
-            text: "Be advised that running memory tests on a live system has risks and can cause system instabilities due to found RAM errors or starvation.<br><br>Please do make yourself familiar with the <a href='https://linux.die.net/man/8/memtester' target='_blank'>User Manual</a> and ideally stop any of the running arrays/pools before the testing at your own risk.",
+            text: "Be advised that running memory tests on a live system has risks and can cause system instabilities due to found RAM errors or starvation.<br><br>Please do make yourself familiar with the <a href='https://linux.die.net/man/8/memtester' target='_blank'>User Manual</a> and if possible stop any of the running arrays/pools before testing at your own risk.",
             type: "warning",
             confirmButtonText: "Proceed",
             showCancelButton: true,
@@ -270,7 +270,7 @@ $(function()
             },
             function(isConfirmed){
                 if(isConfirmed) {
-                    $.cookie('dwmemwarning', 'seen', { expires: 1 });
+                    $.cookie('dwmemwarning', 'seen', { expires: 7 });
                 } else {
                     location = '/Settings';
                 }
