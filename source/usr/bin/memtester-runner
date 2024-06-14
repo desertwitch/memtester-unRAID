@@ -65,7 +65,7 @@ echo "==========================================================================
 echo "" | tee -a /var/lib/memtester/log /var/lib/memtester/errlog
 
 if [ "${params[0]}" == "1" ]; then
-    echo "The detailed error output was enabled, please watch this panel for any occuring errors." | tee -a /var/lib/memtester/errlog
+    echo "The detailed error output was enabled, please watch this panel for any occurring errors." | tee -a /var/lib/memtester/errlog
     echo "" | tee -a /var/lib/memtester/errlog
     /usr/bin/memtester "${params[@]:2}" 1>>/var/lib/memtester/log 2>>/var/lib/memtester/errlog
     CMDRET=${PIPESTATUS[0]}
