@@ -115,7 +115,7 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
 
     <input type="checkbox" id="memnotify" value="memnotify">
     <label for="memnotify" title="Once the operation completes, a notification is sent using Unraid's general notification settings with the result of the operation." class="memtip">Notification on Operation Complete</label> 
-    <span style="float:right;margin-right:10px;"><strong> This program cannot test all of your memory at once, it is therefore not a replacement for extensive <a href="https://www.memtest86.com/download.htm" target="_blank">MemTest86</a> testing.</strong></span>
+    <span style="float:right;margin-right:10px;"><strong>This program cannot test all of your memory at once, it is therefore not a full replacement for extensive <a href="https://www.memtest86.com/download.htm" target="_blank">MemTest86</a> testing.</strong></span>
     <br>
     <input type="checkbox" id="memerrs" value="memerrs" checked>
     <label for="memerrs" title="Beware that recording many thousands of errors can result in multiple GB logfiles and exceed the available RAM. There are safeguards in place so that the system will not crash even in such a case, but it is possible that no further log output can be written once that memory is exhausted." class="memtip">Write Detailed Error Output (<strong>Read Warning</strong>)</label>   
