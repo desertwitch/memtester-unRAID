@@ -56,6 +56,11 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
 .logtable {
     table-layout: fixed;
 }
+.memicon {
+  font-size: 1.6rem;
+  margin-right: 4px;
+  vertical-align: middle;
+}
 </style>
 
 <table class="tablesorter shift logtable" autofocus>
@@ -94,13 +99,14 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
     <input type="text" title="The amount of memory to test (e.g. 5G). A number without a unit is assumed as MB. When selecting the amount of memory to test, please consider leaving some memory for the operating system to still function." class="memtip narrow memrun" id="memsize" name="#arg[7]" placeholder="<memory>[B|K|M|G]" value="">
     <span>&#91;</span>
     <input type="text" title="The amount of loops the memory testing should run for, it will continue indefinitely if none are specified (until stopped)." class="memtip narrow memrun" style="margin:0 0 0 0;" id="memloops" name="#arg[8]" placeholder="(optional) loops" value="">
-    <span style="margin-right:20px">&#93;</span>
+    <span style="margin-right:10px;">&#93;</span>
     <input type="button" class="memrun" id="memstart" value="Start Operation">
-    <span>&#91;</span>
-    <input type="text" title="For advanced testing: Selects a starting point in memory, expects hexadecimal format. A target device must also be selected." class="memtip memrun" style="margin:0 0 0 0;" id="memhex" placeholder="(optional) hex starting point" value="">
+    <span style="color:red;"><strong>Dangerous:</strong></span> <span>&#91;</span>
+    <input type="text" title="Selects a specific region of memory starting at physical address PHYSADDR (given in hex), by mmap-ing the target device. This is mostly of use to hardware developers, for testing memory-mapped I/O devices and similar. Note that the memory region will be overwritten during testing, so it is not safe to specify memory which is allocated for the system or for other applications; doing so will cause them to crash. If you absolutely must test a particular region of actual physical memory, arrange to have that memory allocated by your test software, and hold it in this allocated state, then run the tester after." class="memtip memrun" style="margin:0 0 0 0;" id="memhex" placeholder="(optional) hex starting point" value="">
     <span>&amp;</span>
-    <input type="text" title="For advanced testing: Selects a memory device, expects a device path (e.g. /dev/mem). A starting point must also be selected." class="memtip memrun" style="margin:0 0 0 0;" id="memtarget" placeholder="(optional) target device" value="">
+    <input type="text" title="Selects a target memory device, expects a device path (e.g. /dev/mem). A specific region must also be selected, but read the warning text of the starting point option first." class="memtip memrun" style="margin:0 0 0 0;" id="memtarget" placeholder="(optional) target device" value="">
     <span>&#93;</span>
+    <span style="margin-left:5px;margin-right:10px;" title="Memtester's User Manual" class="memtip" ><a href="https://linux.die.net/man/8/memtester" target="_blank"><i class="fa fa-question-circle-o memicon"></i></a></span>
     <span style="float:right;">
         <input type="button" class="memrun" id="memclear" value="Clear Logs">
         <input type="button" class="memnotrun" id="memstop" value="Stop Operation">
@@ -203,7 +209,7 @@ $(function()
             if(!displayMemTest.test(displayMemSize)) { displayMemSize = displayMemSize + "M"; }
             swal({
                 title: "Ready for Testing",
-                text: "<span style='font-weight:bold'>Selected Memory: " + displayMemSize + "</span><br><br>The memory testing is about to start, you may notice your system slow down during the testing process. Please make sure you have not selected all available memory and have left a bit of memory for the system to still function while the memory testing is in progress.<br><br><span style='font-weight:bold;color:red;'>When testing large amounts of memory, it is recommended to stop the array beforehand to avoid problems due to memory starvation.</span>",
+                text: "<span style='font-weight:bold'>Selected Memory: " + displayMemSize + "</span><br><br>The memory testing is about to start, you may notice your system slow down during the testing process. Please make sure you have not selected all available memory and have left a bit of memory for the system to still function while the memory testing is in progress.<br><br><span style='font-weight:bold;color:red;'>When testing memory, it is always recommended to stop any arrays/pools first to avoid problems due to found RAM errors or starvation.</span>",
                 type: "info",
                 showCancelButton: true,
                 confirmButtonText: "Start Testing",
@@ -251,5 +257,24 @@ $(function()
     getRegularMemLogs();
     getErrorMemLogs();
     showStatus('memtester');
+
+    if ($.cookie('dwmemwarning')===undefined) {
+        swal({
+            title: "Plugin Disclaimer",
+            text: "Be advised that running memory tests on a live system has risks and can cause system instabilities due to found RAM errors or starvation.<br><br>Please do make yourself familiar with the <a href='https://linux.die.net/man/8/memtester' target='_blank'>User Manual</a> and ideally stop any of the running arrays/pools before the testing at your own risk.",
+            type: "warning",
+            confirmButtonText: "Proceed",
+            showCancelButton: true,
+            cancelButtonText: "Go Back",
+            html: true
+            },
+            function(isConfirmed){
+                if(isConfirmed) {
+                    $.cookie('dwmemwarning', 'seen', { expires: 1 });
+                } else {
+                    location = '/Settings';
+                }
+            });
+    }
 });
 </script>
