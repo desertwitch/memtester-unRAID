@@ -270,7 +270,7 @@ $(function()
             },
             function(isConfirmed){
                 if(isConfirmed) {
-                    $.cookie('dwmemwarning', 'seen', { expires: 7 });
+                    $.cookie('dwmemwarning', 'seen', { expires: 3 });
                 } else {
                     location = '/Settings';
                 }
