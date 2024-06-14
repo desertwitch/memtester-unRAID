@@ -39,22 +39,4 @@ function humanFileSize($sizeObj,$unit="") {
         return "-";
     }
 }
-function getMemoryLimitBytes()
-{
-    try {
-        $limit = ini_get('memory_limit');
-        if ($limit == -1) return 0;
-
-        $units = [1 => 'K', 'M', 'G'];
-        $unit = strtoupper(substr($limit, -1));
-        if ($exp = array_search($unit, $units)) {
-            return (int)substr($limit, 0, -1) * pow(1024, $exp);
-        }
-        else return (int)$limit;
-    } catch (Throwable $e) { // For PHP 7
-        return false;
-    } catch (Exception $e) { // For PHP 5
-        return false;
-    }
-}
 ?>
