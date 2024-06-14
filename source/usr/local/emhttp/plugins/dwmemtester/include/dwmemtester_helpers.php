@@ -31,12 +31,12 @@ function humanFileSize($sizeObj,$unit="") {
                 return number_format($size/(1<<10),2)." KB";
             return number_format($size)." B";
         } else {
-            return "-";
+            return false;
         }
     } catch (Throwable $e) { // For PHP 7
-        return "-";
+        return false;
     } catch (Exception $e) { // For PHP 5
-        return "-";
+        return false;
     }
 }
 ?>
