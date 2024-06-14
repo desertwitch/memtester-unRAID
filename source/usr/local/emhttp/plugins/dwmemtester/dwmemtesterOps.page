@@ -119,7 +119,7 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
     <br>
     <input type="checkbox" id="memerrs" value="memerrs" checked>
     <label for="memerrs" title="Beware that recording many thousands of errors can result in multiple GB logfiles and exceed the available RAM. There are safeguards in place so that the system will not crash even in such a case, but it is possible that no further log output can be written once that memory is exhausted." class="memtip">Write Detailed Error Output (<strong>Read Warning</strong>)</label>   
-    <span style="float:right;margin-right:10px;">It is meant to either stress test your RAM or identify obvious problems in situations where a restart is not (immediately) possible.</span>
+    <span style="float:right;margin-right:10px;">It can however identify memory problems in situations where a restart is not (immediately) possible or stress test your RAM.</span>
     <br>
     <span style="float:right;margin-right:10px;">When selecting the amount of memory to test, <u>please consider leaving some memory for the operating system to function.</u></span>
 </form>
