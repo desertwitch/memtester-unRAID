@@ -109,7 +109,7 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
 
     <input type="checkbox" id="memnotify" value="memnotify">
     <label for="memnotify" title="Once the operation completes, a notification is sent using Unraid's general notification settings with the result of the operation." class="memtip">Notification on Operation Complete</label> 
-    <span style="float:right;margin-right:10px;"><strong>This program cannot test all of your memory at once, it is therefore not a replacement for a proper <a href="https://www.memtest86.com/download.htm" target="_blank">MemTest86</a> session.</strong></span>
+    <span style="float:right;margin-right:10px;"><strong> This program cannot test all of your memory at once, it is therefore not a replacement for extensive <a href="https://www.memtest86.com/download.htm" target="_blank">MemTest86</a> testing.</strong></span>
     <br>
     <input type="checkbox" id="memerrs" value="memerrs" checked>
     <label for="memerrs" title="Beware that recording many thousands of errors can result in multiple GB logfiles and exceed the available RAM. There are safeguards in place so that the system will not crash even in such a case, but it is possible that no further log output can be written once that memory is exhausted." class="memtip">Write Detailed Error Output (<strong>Read Warning</strong>)</label>   
@@ -195,22 +195,35 @@ $(function()
 {
     $('#memstart').click(function(){
         if($('#memsize').val()) {
-            $('#memcommand').val('/usr/local/emhttp/plugins/dwmemtester/scripts/start');
-            if($('#memerrs').is(':checked')) {
-                $('#arg1').val('1');
-            }
-            if($('#memnotify').is(':checked')) {
-                $('#arg2').val('1');
-            }    
-            if($('#memhex').val()) {
-                $('#arg3').val('-p');
-                $('#arg4').val($('#memhex').val());
-            }
-            if($('#memtarget').val()) {
-                $('#arg5').val('-d');
-                $('#arg6').val($('#memtarget').val());
-            }
-            $('#memcommands').submit();
+            var displayMemSize = $('#memsize').val();
+            var displayMemTest = /[BKMG]/;
+            if(!displayMemTest.test(displayMemSize)) { displayMemSize = displayMemSize + "M"; }
+            swal({
+                title: "Ready for Testing",
+                text: "<span style='font-weight:bold'>Selected Memory: " + displayMemSize + "</span><br><br>The memory testing is about to start, you may notice your system slow down during the testing process. Please make sure you have not selected all available memory and have left a bit of memory for the system to still function while the memory testing is in progress.",
+                type: "info",
+                showCancelButton: true,
+                confirmButtonText: "Start Testing",
+                html: true
+                },
+                function(){
+                    $('#memcommand').val('/usr/local/emhttp/plugins/dwmemtester/scripts/start');
+                    if($('#memerrs').is(':checked')) {
+                        $('#arg1').val('1');
+                    }
+                    if($('#memnotify').is(':checked')) {
+                        $('#arg2').val('1');
+                    }    
+                    if($('#memhex').val()) {
+                        $('#arg3').val('-p');
+                        $('#arg4').val($('#memhex').val());
+                    }
+                    if($('#memtarget').val()) {
+                        $('#arg5').val('-d');
+                        $('#arg6').val($('#memtarget').val());
+                    }
+                    $('#memcommands').submit();
+                });
         } else {
             swal("Operation Failure", "You need to select an amount of memory to test.", "error");
         }
