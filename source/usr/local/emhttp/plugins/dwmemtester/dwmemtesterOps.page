@@ -101,7 +101,7 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
     <input type="text" title="The amount of loops the memory testing should run for, it will continue indefinitely if none are specified (until stopped)." class="memtip narrow memrun" style="margin:0 0 0 0;" id="memloops" name="#arg[8]" placeholder="(optional) loops" value="">
     <span style="margin-right:10px;">&#93;</span>
     <input type="button" class="memrun" id="memstart" value="Start Operation">
-    <span style="color:red;"><strong>Dangerous:</strong></span> <span>&#91;</span>
+    <span><strong>Experts:</strong> &#91;</span>
     <input type="text" title="Selects a specific region of memory starting at physical address PHYSADDR (given in hex), by mmap-ing the target device. This is mostly of use to hardware developers, for testing memory-mapped I/O devices and similar. Note that the memory region will be overwritten during testing, so it is not safe to specify memory which is allocated for the system or for other applications; doing so will cause them to crash. If you absolutely must test a particular region of actual physical memory, arrange to have that memory allocated by your test software, and hold it in this allocated state, then run the tester after." class="memtip memrun" style="margin:0 0 0 0;" id="memhex" placeholder="(optional) hex starting point" value="">
     <span>&amp;</span>
     <input type="text" title="Selects a target memory device, expects a device path (e.g. /dev/mem). A specific region must also be selected, but read the warning text of the starting point option first." class="memtip memrun" style="margin:0 0 0 0;" id="memtarget" placeholder="(optional) target device" value="">
