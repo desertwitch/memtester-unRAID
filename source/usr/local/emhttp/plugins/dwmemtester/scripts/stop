@@ -6,7 +6,6 @@
 # Copyright SimonF (parts of code from NUT package)
 # Copyright Lime Technology (any and all other parts of Unraid)
 #
-# Copyright Oliver Cervera (parts of code from snapraid-aio-script)
 # Copyright desertwitch (as author and maintainer of this file)
 #
 # This program is free software; you can redistribute it and/or
