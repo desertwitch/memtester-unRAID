@@ -203,7 +203,7 @@ $(function()
             if(!displayMemTest.test(displayMemSize)) { displayMemSize = displayMemSize + "M"; }
             swal({
                 title: "Ready for Testing",
-                text: "<span style='font-weight:bold'>Selected Memory: " + displayMemSize + "</span><br><br>The memory testing is about to start, you may notice your system slow down during the testing process. Please make sure you have not selected all available memory and have left a bit of memory for the system to still function while the memory testing is in progress.",
+                text: "<span style='font-weight:bold'>Selected Memory: " + displayMemSize + "</span><br><br>The memory testing is about to start, you may notice your system slow down during the testing process. Please make sure you have not selected all available memory and have left a bit of memory for the system to still function while the memory testing is in progress.<br><br><span style='font-weight:bold;color:red;'>When testing large amounts of memory, it is recommend to stop the array beforehand to avoid problems due to memory stressing.</span>",
                 type: "info",
                 showCancelButton: true,
                 confirmButtonText: "Start Testing",
