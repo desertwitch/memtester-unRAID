@@ -14,7 +14,7 @@
 <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
 
-<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" Min="6.8.3" icon="microchip">
+<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" support="https://forums.unraid.net/topic/168125-plugin-live-memory-tester-for-unraid/" min="6.8.3" icon="microchip">
 
 <CHANGES>
 ## Live Memory Tester for UNRAID
