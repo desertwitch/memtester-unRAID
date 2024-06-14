@@ -50,6 +50,9 @@ if ! mountpoint -q /var/lib/memtester; then
     fi
 fi
 
+chown root:root /var/lib/memtester
+chmod 755 /var/lib/memtester
+
 STARTDATE="$(date +"%d.%m.%Y %H:%M:%S %Z")"
 echo "$STARTDATE" > /var/lib/memtester/laststart
 
