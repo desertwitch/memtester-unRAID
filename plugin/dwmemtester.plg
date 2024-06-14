@@ -3,14 +3,14 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "dwmemtester">
 <!ENTITY author    "desertwitch">
-<!ENTITY version   "2024.06.14d">
+<!ENTITY version   "2024.06.15">
 <!ENTITY launch    "Settings/dwmemtesterOps">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/&author;/memtester-unRAID/main">
 <!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
 <!ENTITY pkgURL    "&gitURL;/packages">
 <!ENTITY plgPATH   "/boot/config/plugins/&name;">
-<!ENTITY plgNAME   "dwmemtester-2024.06.14-x86_64-5">
-<!ENTITY plgMD5    "63e127b032afef996c0da392048f1cd2">
+<!ENTITY plgNAME   "dwmemtester-2024.06.15-x86_64-1">
+<!ENTITY plgMD5    "0e88b58b7e8d89473fc9b7f51a005eaa">
 <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
 
@@ -18,7 +18,10 @@
 
 <CHANGES>
 ## Live Memory Tester for UNRAID
-###2024.06.14d
+###2024.06.15
+- fix: repacked binaries to include source code patches
+- fix: corrected some spelling mistakes and formatting problems
+###2024.06.14
 - release note: welcome to the first version of the package
 </CHANGES>
 
