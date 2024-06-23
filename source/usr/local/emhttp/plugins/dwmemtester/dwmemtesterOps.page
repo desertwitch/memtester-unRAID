@@ -28,8 +28,8 @@ require_once '/usr/local/emhttp/plugins/dwmemtester/include/dwmemtester_helpers.
 
 $mem_laststart = trim(file_exists("/var/lib/memtester/laststart") ? htmlspecialchars(file_get_contents("/var/lib/memtester/laststart")) : "-");
 $mem_lastfinish = trim(file_exists("/var/lib/memtester/lastfinish") ? htmlspecialchars(file_get_contents("/var/lib/memtester/lastfinish")) : "-");
-$mem_log_size = trim(file_exists("/var/lib/memtester/log") ? htmlspecialchars(humanFileSize(filesize("/var/lib/memtester/log"))) : "-");
-$mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialchars(humanFileSize(filesize("/var/lib/memtester/errlog"))) : "-");
+$mem_log_size = trim(file_exists("/var/lib/memtester/log") ? htmlspecialchars(mem_humanFileSize(filesize("/var/lib/memtester/log"))) : "-");
+$mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialchars(mem_humanFileSize(filesize("/var/lib/memtester/errlog"))) : "-");
 ?>
 
 <style type="text/css">
