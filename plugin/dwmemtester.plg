@@ -18,6 +18,8 @@
 
 <CHANGES>
 ## Live Memory Tester for UNRAID
+###2024.08.07
+- new: switched from legacy to more recent update checking mechanism
 ###2024.06.23
 - fix: changed units from KiB to KB
 - fix: renamed generic function names to avoid declaration collisions with other plugins

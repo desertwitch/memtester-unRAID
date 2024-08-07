@@ -276,5 +276,9 @@ $(function()
                 }
             });
     }
+
+    if ( typeof caPluginUpdateCheck === "function" ) {
+        caPluginUpdateCheck("dwmemtester.plg",{name:"Live Memory Tester"});
+    }
 });
 </script>
