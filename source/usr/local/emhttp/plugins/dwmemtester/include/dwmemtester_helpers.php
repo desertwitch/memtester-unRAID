@@ -17,18 +17,18 @@
  * included in all copies or substantial portions of the Software.
  *
  */
-function mem_humanFileSize($sizeObj,$unit="") {
+function mem_humanFileSize($sizeObj,$decs=2,$unit="") {
     try {
         $size = intval($sizeObj);
         if($size) {
             if( (!$unit && $size >= 1000000000000) || $unit == "TB")
-                return number_format(($size/1000000000000),2) . " TB";
+                return number_format(($size/1000000000000),$decs) . " TB";
             if( (!$unit && $size >= 1000000000) || $unit == "GB")
-                return number_format(($size/1000000000),2) . " GB";
+                return number_format(($size/1000000000),$decs) . " GB";
             if( (!$unit && $size >= 1000000) || $unit == "MB")
-                return number_format(($size/1000000),2) . " MB";
+                return number_format(($size/1000000),$decs) . " MB";
             if( (!$unit && $size >= 1000) || $unit == "KB")
-                return number_format(($size/1000),2) . " KB";
+                return number_format(($size/1000),$decs) . " KB";
             return number_format($size) . " B";
         } else {
             return false;

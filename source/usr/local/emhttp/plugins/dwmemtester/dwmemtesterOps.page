@@ -95,7 +95,7 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
     <input type="hidden" id="arg5" name="#arg[5]" value="">
     <input type="hidden" id="arg6" name="#arg[6]" value="">
 
-    
+    <div><i class="fa fa-exclamation-circle"></i> <strong><span id="memfreeram">-</span> free RAM</strong> out of <span id="memtotalram">-</span> total installed RAM.</div>
     <input type="text" title="The amount of memory to test (e.g. 5G). A number without a unit is assumed as MB. When selecting the amount of memory to test, please consider leaving some memory for the operating system to still function." class="memtip narrow memrun" id="memsize" name="#arg[7]" placeholder="<memory>[B|K|M|G]" value="">
     <span>&#91;</span>
     <input type="text" title="The amount of loops the memory testing should run for, it will continue indefinitely if none are specified (until stopped)." class="memtip narrow memrun" style="margin:0 0 0 0;" id="memloops" name="#arg[8]" placeholder="(optional) loops" value="">
@@ -183,6 +183,12 @@ function getMemStatus() {
             }
             if(splitData[3]) {
                 $('#memerrsize').html(splitData[3]);
+            }
+            if(splitData[4]) {
+                $('#memtotalram').html(splitData[4]);
+            }
+            if(splitData[5]) {
+                $('#memfreeram').html(splitData[5]);
             }
 	    }
     });
