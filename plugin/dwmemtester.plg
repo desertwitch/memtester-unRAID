@@ -18,6 +18,8 @@
 
 <CHANGES>
 ## Live Memory Tester for UNRAID
+###2024.08.16
+- new: added additional information about free and installed RAM to GUI
 ###2024.08.08
 - new: added additional information about test runtime to JS modal (when test is started)
 ###2024.08.07
