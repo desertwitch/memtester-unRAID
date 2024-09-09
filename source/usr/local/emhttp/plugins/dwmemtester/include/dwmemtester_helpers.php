@@ -33,9 +33,9 @@ function mem_humanFileSize($sizeObj,$decs=2,$unit="") {
         } else {
             return false;
         }
-    } catch (Throwable $e) { // For PHP 7
+    } catch (\Throwable $t) { 
         return false;
-    } catch (Exception $e) { // For PHP 5
+    } catch (\Exception $e) {
         return false;
     }
 }

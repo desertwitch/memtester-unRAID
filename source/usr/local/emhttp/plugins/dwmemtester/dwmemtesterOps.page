@@ -127,30 +127,30 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
 <script type="text/javascript">
 function getRegularMemLogs() {
     $.get('/plugins/dwmemtester/include/dwmemtester_log.php', {"type": "regular"}, function(data) {
-        if (data) { 
-            $('#memlogviewer').html(data); 
+        if (data && data.success && data.success.response) { 
+            $('#memlogviewer').html(data.success.response); 
 	        var pre = $(".memlog");
 	        pre.scrollTop(pre.prop("scrollHeight"));
 	    }
-    });
+    }, 'json');
     clearTimeout(timers.getRegularMemLogs);
     timers.getRegularMemLogs = setTimeout(getRegularMemLogs, 1000);
 }
 function getErrorMemLogs() {
     $.get('/plugins/dwmemtester/include/dwmemtester_log.php', {"type": "errors"}, function(data) {
-        if (data) { 
-            $('#memerrlogviewer').html(data); 
+        if (data && data.success && data.success.response) { 
+            $('#memerrlogviewer').html(data.success.response); 
 	        var pre = $(".memerrlog");
 	        pre.scrollTop(pre.prop("scrollHeight"));
 	    }
-    });
+    }, 'json');
     clearTimeout(timers.getErrorMemLogs);
     timers.getErrorMemLogs = setTimeout(getErrorMemLogs, 1000);
 }
 function getMemStatus() {
     $.get('/plugins/dwmemtester/include/dwmemtester_status.php', {"getfs": "yes"}, function(data) {
-        if (data) {
-            var splitData = data.split(",");
+        if (data && data.success && data.success.response) {
+            var splitData = data.success.response.split(";");
             if(splitData[0]) {
                 if(splitData[0] === "RUNNING:YES") {
                     $('#memstatusicon').show();
@@ -191,7 +191,7 @@ function getMemStatus() {
                 $('#memfreeram').html(splitData[5]);
             }
 	    }
-    });
+    }, 'json');
     clearTimeout(timers.getMemStatus);
     timers.getMemStatus = setTimeout(getMemStatus, 3000);
 }

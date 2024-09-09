@@ -17,28 +17,47 @@
  * included in all copies or substantial portions of the Software.
  *
  */
-if(!empty($_GET["type"]) && $_GET["type"] === "regular" ) {
-    if(file_exists("/var/lib/memtester/log")) {
-        $mem_log = file_get_contents("/var/lib/memtester/log");
-        if(!empty($mem_log)) {
-            echo("<pre class='memlog'>".htmlspecialchars($mem_log)."</pre>");
+$dwmem_logger_retarr = [];
+
+try {
+    if(isset($_GET["type"]) && $_GET["type"] === "regular" ) {
+        if(file_exists("/var/lib/memtester/log")) {
+            $mem_log = file_get_contents("/var/lib/memtester/log");
+            if(!empty($mem_log)) {
+                $dwmem_logger_retarr["success"]["response"] = "<pre class='memlog'>".htmlspecialchars($mem_log)."</pre>";
+            } else {
+                $dwmem_logger_retarr["success"]["response"] = "<pre class='memlog'></pre>";
+            }
         } else {
-            echo("<pre class='memlog'></pre>");
+            $dwmem_logger_retarr["success"]["response"] = "<pre class='memlog'></pre>";
         }
-    } else {
-        echo("<pre class='memlog'></pre>");
+    }
+    elseif(isset($_GET["type"]) && $_GET["type"] === "errors" ) {
+        if(file_exists("/var/lib/memtester/errlog")) {
+            $mem_err_log = file_get_contents("/var/lib/memtester/errlog");
+            if(!empty($mem_err_log)) {
+                $dwmem_logger_retarr["success"]["response"] = "<pre class='memerrlog'>".htmlspecialchars($mem_err_log)."</pre>";
+            } else {
+                $dwmem_logger_retarr["success"]["response"] = "<pre class='memerrlog'></pre>";
+            }
+        } else {
+            $dwmem_logger_retarr["success"]["response"] = "<pre class='memerrlog'></pre>";
+        }
+    }
+    else {
+        $dwmem_logger_retarr["error"]["response"] = "Missing GET variables!";
     }
 }
-if(!empty($_GET["type"]) && $_GET["type"] === "errors" ) {
-    if(file_exists("/var/lib/memtester/errlog")) {
-        $mem_err_log = file_get_contents("/var/lib/memtester/errlog");
-        if(!empty($mem_err_log)) {
-            echo("<pre class='memerrlog'>".htmlspecialchars($mem_err_log)."</pre>");
-        } else {
-            echo("<pre class='memerrlog'></pre>");
-        }
-    } else {
-        echo("<pre class='memerrlog'></pre>");
-    }
+catch (\Throwable $t) {
+    error_log($t);
+    $dwmem_logger_retarr = [];
+    $dwmem_logger_retarr["error"]["response"] = $t->getMessage();
 }
+catch (\Exception $e) {
+    error_log($e);
+    $dwmem_logger_retarr = [];
+    $dwmem_logger_retarr["error"]["response"] = $e->getMessage();
+}
+
+echo(json_encode($dwmem_logger_retarr));
 ?>
