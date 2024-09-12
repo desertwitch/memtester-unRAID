@@ -125,7 +125,7 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
     <span style="float:right;margin-right:10px;">When selecting the amount of memory to test, <u>please consider leaving some memory for the operating system to function.</u></span>
 </form>
 
-<hr>
+<br><br><hr><br>
 
 <div>
     <span class="left" style="font-size:1.1rem;letter-spacing:1px;"><strong><i class="icon fa fa-cogs"></i>GENERAL SETTINGS</strong></span>
