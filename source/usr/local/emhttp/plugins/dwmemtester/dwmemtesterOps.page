@@ -24,6 +24,7 @@ Markdown="false"
  * included in all copies or substantial portions of the Software.
  *
  */
+require_once '/usr/local/emhttp/plugins/dwmemtester/include/dwmemtester_config.php';
 require_once '/usr/local/emhttp/plugins/dwmemtester/include/dwmemtester_helpers.php';
 
 $mem_laststart = trim(file_exists("/var/lib/memtester/laststart") ? htmlspecialchars(file_get_contents("/var/lib/memtester/laststart")) : "-");
@@ -122,6 +123,42 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
     <span style="float:right;margin-right:10px;">It can however identify memory problems in situations where a restart is not (immediately) possible or stress test your RAM.</span>
     <br>
     <span style="float:right;margin-right:10px;">When selecting the amount of memory to test, <u>please consider leaving some memory for the operating system to function.</u></span>
+</form>
+
+<hr>
+
+<div>
+    <span class="left" style="font-size:1.1rem;letter-spacing:1px;"><strong><i class="icon fa fa-cogs"></i>GENERAL SETTINGS</strong></span>
+</div><br>
+
+<form markdown="0" id="mem-settings" name="mem_settings" method="POST" action="/update.php" target="progressFrame">
+<input type="hidden" name="#file" value="dwmemtester/dwmemtester.cfg">
+    <dl>
+        <dt>Plugin Usage Metric Functions:</dt>
+        <dd>
+            <select class="" name="METRICSAPI" size="1">
+                <?=mk_option($dwmemtester_metricsapi, 'disable', 'No');?>
+                <?=mk_option($dwmemtester_metricsapi, 'enable', 'Yes');?>
+            </select>
+        </dd>
+    </dl>
+
+    <blockquote class="inline_help">
+        <p>Enables collection of <strong>anonymized</strong> plugin usage statistics through the plugin usage metrics API.</p>
+        <p>This aids prioritization of bug reports, development of new features and planning for plugin updates/deprecation.</p>
+        <p><em>Attributes: Metric ID, Plugin Version, Unraid Version, LMT Backend Version, LMT Process Active (Yes/No).</em></p> 
+        <p><strong><i class="fa fa-heart" style="color:red;"></i> If possible, please keep this setting <u>enabled</u> to support the continued development of this plugin - thank you!</strong></p>
+    </blockquote>
+
+    <dl>
+        <dt>
+            <input type="submit" name="#default" value="Default">
+        </dt>
+        <dd>
+            <input type="submit" name="#apply" value="Apply">
+            <input type="button" value="Done" onclick="done()">
+        </dd>
+    </dl>
 </form>
 
 <script type="text/javascript">
