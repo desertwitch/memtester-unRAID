@@ -42,6 +42,7 @@ stop already running instances before doing anything
 <FILE Run="/bin/bash">
 <INLINE>
 killall memtester >/dev/null 2>&amp;1
+killall memtester-poller >/dev/null 2>&amp;1
 exit 0
 </INLINE>
 </FILE>
@@ -82,6 +83,8 @@ definition for uninstallation of the plugin
 <FILE Run="/bin/bash" Method="remove">
 <INLINE>
 killall memtester >/dev/null 2>&amp;1
+killall memtester-poller >/dev/null 2>&amp;1
+
 removepkg &plgPATH;/*.txz
 rm -rf &plgPATH;
 rm -rf &emhttp;
@@ -93,6 +96,7 @@ if mountpoint -q /var/lib/memtester; then
 fi
 
 rm -rf /var/lib/memtester
+rm -f /etc/cron.daily/memtester-poller >/dev/null 2>&amp;1
 
 echo ""
 echo "-----------------------------------------------------------"
