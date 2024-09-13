@@ -3,14 +3,14 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "dwmemtester">
 <!ENTITY author    "desertwitch">
-<!ENTITY version   "2024.09.13">
+<!ENTITY version   "2024.09.13a">
 <!ENTITY launch    "Settings/dwmemtesterOps">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/&author;/memtester-unRAID/main">
 <!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
 <!ENTITY pkgURL    "&gitURL;/packages">
 <!ENTITY plgPATH   "/boot/config/plugins/&name;">
-<!ENTITY plgNAME   "dwmemtester-2024.09.13-x86_64-1">
-<!ENTITY plgMD5    "563662bef03f42409b3d791f3fdf1771">
+<!ENTITY plgNAME   "dwmemtester-2024.09.13-x86_64-2">
+<!ENTITY plgMD5    "39d5ad3d58d307241b229e02753fe061">
 <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
 
@@ -18,6 +18,8 @@
 
 <CHANGES>
 ## Live Memory Tester for UNRAID
+###2024.09.13a
+- important fix: address possible flock condition causing installation script to stall (thanks AgentXXL)
 ###2024.09.13
 - fix: made optical changes regarding wording, positioning and helptexts on the Live Memory Tester Settings page
 - new: use of plugin usage metric functions to aid development of new features and planning for plugin updates (toggleable)
@@ -71,6 +73,7 @@ run the post-installation scripts
 -->
 <FILE Run="/bin/bash">
 <INLINE> 
+/etc/cron.daily/memtester-poller conntest >/dev/null 2>&amp;1 &amp;
 echo ""
 echo "-----------------------------------------------------------"
 echo " Live Memory Tester for UNRAID has been installed."

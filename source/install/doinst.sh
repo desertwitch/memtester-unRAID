@@ -39,4 +39,3 @@ chmod 755 /var/lib/memtester
 rm -f /etc/cron.daily/memtester-poller >/dev/null 2>&1
 ln -sf /usr/local/emhttp/plugins/dwmemtester/scripts/poller /etc/cron.daily/memtester-poller >/dev/null 2>&1
 chmod +x /etc/cron.daily/memtester-poller >/dev/null 2>&1
-/etc/cron.daily/memtester-poller conntest >/dev/null 2>&1 &
