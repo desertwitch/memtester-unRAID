@@ -39,7 +39,7 @@ signal_exit_memtest() {
     exit 1
 }
 
-if ! mountpoint -q /var/lib/memtester; then 
+if ! mountpoint -q /var/lib/memtester; then
     rm -rf /var/lib/memtester
     mkdir -p /var/lib/memtester
     if ! mount -t tmpfs -o size=30% tmpfs /var/lib/memtester; then
@@ -56,7 +56,7 @@ chmod 755 /var/lib/memtester
 STARTDATE="$(date +"%d.%m.%Y %H:%M:%S %Z")"
 echo "$STARTDATE" > /var/lib/memtester/laststart
 
-trap signal_exit_memtest SIGTERM SIGINT 
+trap signal_exit_memtest SIGTERM SIGINT
 
 echo "memory testing started with parameters: ${params[*]:2}" | logger -t "memtester-runner"
 
