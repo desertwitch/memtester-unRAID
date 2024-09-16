@@ -54,7 +54,7 @@ function getMemFooter() {
                     $('.memfooterramwarning').hide();
                 }
             }
-	    }
+        }
     }, 'json');
     clearTimeout(timers.getMemFooter);
     timers.getMemFooter = setTimeout(getMemFooter, 10000);

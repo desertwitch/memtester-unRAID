@@ -33,7 +33,7 @@ function mem_humanFileSize($sizeObj,$decs=2,$unit="") {
         } else {
             return false;
         }
-    } catch (\Throwable $t) { 
+    } catch (\Throwable $t) {
         return false;
     } catch (\Exception $e) {
         return false;

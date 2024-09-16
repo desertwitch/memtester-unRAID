@@ -115,11 +115,11 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
     </span><br>
 
     <input type="checkbox" id="memnotify" value="memnotify">
-    <label for="memnotify" title="Once the operation completes, a notification is sent using Unraid's general notification settings with the result of the operation." class="memtip">Notification on Operation Complete</label> 
+    <label for="memnotify" title="Once the operation completes, a notification is sent using Unraid's general notification settings with the result of the operation." class="memtip">Notification on Operation Complete</label>
     <span style="float:right;margin-right:10px;"><strong>This program cannot test all of your memory at once, it is therefore not a full replacement for extensive <a href="https://www.memtest86.com/download.htm" target="_blank">MemTest86</a> testing.</strong></span>
     <br>
     <input type="checkbox" id="memerrs" value="memerrs" checked>
-    <label for="memerrs" title="Beware that recording many thousands of errors can result in multiple GB logfiles and exceed the available RAM. There are safeguards in place so that the system will not crash even in such a case, but it is possible that no further log output can be written once that memory is exhausted." class="memtip">Write Detailed Error Output (<strong>?</strong>)</label>   
+    <label for="memerrs" title="Beware that recording many thousands of errors can result in multiple GB logfiles and exceed the available RAM. There are safeguards in place so that the system will not crash even in such a case, but it is possible that no further log output can be written once that memory is exhausted." class="memtip">Write Detailed Error Output (<strong>?</strong>)</label>
     <span style="float:right;margin-right:10px;">It can however identify memory problems in situations where a restart is not (immediately) possible or stress test your RAM.</span>
     <br>
     <span style="float:right;margin-right:10px;">When selecting the amount of memory to test, <u>please consider leaving some memory for the operating system to function.</u></span>
@@ -146,7 +146,7 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
     <blockquote class="inline_help">
         <p>Enables collection of <strong>anonymized</strong> plugin usage statistics through the plugin usage metrics API.</p>
         <p>This aids prioritization of bug reports, development of new features and planning for plugin updates/deprecation.</p>
-        <p><em>Attributes: Metric ID, Plugin Version, Unraid Version, LMT Backend Version, LMT Process Active (Yes/No).</em></p> 
+        <p><em>Attributes: Metric ID, Plugin Version, Unraid Version, LMT Backend Version, LMT Process Active (Yes/No).</em></p>
         <p><strong><i class="fa fa-heart" style="color:red;"></i> If possible, please keep this setting <u>enabled</u> to support the continued development of this plugin - thank you!</strong></p>
     </blockquote>
 
@@ -164,22 +164,22 @@ $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialch
 <script type="text/javascript">
 function getRegularMemLogs() {
     $.get('/plugins/dwmemtester/include/dwmemtester_log.php', {"type": "regular"}, function(data) {
-        if (data && data.success && data.success.response) { 
-            $('#memlogviewer').html(data.success.response); 
-	        var pre = $(".memlog");
-	        pre.scrollTop(pre.prop("scrollHeight"));
-	    }
+        if (data && data.success && data.success.response) {
+            $('#memlogviewer').html(data.success.response);
+            var pre = $(".memlog");
+            pre.scrollTop(pre.prop("scrollHeight"));
+        }
     }, 'json');
     clearTimeout(timers.getRegularMemLogs);
     timers.getRegularMemLogs = setTimeout(getRegularMemLogs, 1000);
 }
 function getErrorMemLogs() {
     $.get('/plugins/dwmemtester/include/dwmemtester_log.php', {"type": "errors"}, function(data) {
-        if (data && data.success && data.success.response) { 
-            $('#memerrlogviewer').html(data.success.response); 
-	        var pre = $(".memerrlog");
-	        pre.scrollTop(pre.prop("scrollHeight"));
-	    }
+        if (data && data.success && data.success.response) {
+            $('#memerrlogviewer').html(data.success.response);
+            var pre = $(".memerrlog");
+            pre.scrollTop(pre.prop("scrollHeight"));
+        }
     }, 'json');
     clearTimeout(timers.getErrorMemLogs);
     timers.getErrorMemLogs = setTimeout(getErrorMemLogs, 1000);
@@ -227,7 +227,7 @@ function getMemStatus() {
             if(splitData[5]) {
                 $('#memfreeram').html(splitData[5]);
             }
-	    }
+        }
     }, 'json');
     clearTimeout(timers.getMemStatus);
     timers.getMemStatus = setTimeout(getMemStatus, 3000);
@@ -267,7 +267,7 @@ $(function()
                     }
                     if($('#memnotify').is(':checked')) {
                         $('#arg2').val('1');
-                    }    
+                    }
                     if($('#memhex').val()) {
                         $('#arg3').val('-p');
                         $('#arg4').val($('#memhex').val());

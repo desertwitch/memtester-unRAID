@@ -41,7 +41,7 @@ try {
         if(!empty($mem_disk_util)) { $mem_highram = ($mem_disk_util < 90) ? "NO" : "YES"; }
 
         $mem_running = htmlspecialchars(trim(shell_exec( "if pgrep -x memtester >/dev/null 2>&1; then echo YES; else echo NO; fi" ) ?? "-"));
-        
+
         $dwmem_status_retarr["success"]["response"] = "RUNNING:".$mem_running.";".$mem_highram.";".$mem_log_size.";".$mem_errlog_size.";".$mem_total.";".$mem_free;
     }
     else {
