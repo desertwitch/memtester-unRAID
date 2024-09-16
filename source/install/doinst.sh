@@ -24,7 +24,7 @@ chmod 755 /usr/bin/memtester-runner
 
 cp -n $DOCROOT/default.cfg $BOOT/dwmemtester.cfg >/dev/null 2>&1
 
-if ! mountpoint -q /var/lib/memtester; then 
+if ! mountpoint -q /var/lib/memtester; then
     rm -rf /var/lib/memtester
     mkdir -p /var/lib/memtester
     if ! mount -t tmpfs -o size=30% tmpfs /var/lib/memtester; then
