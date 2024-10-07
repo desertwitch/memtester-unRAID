@@ -33,8 +33,8 @@ try {
         if($_GET["getfs"] === "yes" ) {
             $mem_log_size = trim(file_exists("/var/lib/memtester/log") ? htmlspecialchars(mem_humanFileSize(filesize("/var/lib/memtester/log"))) : "");
             $mem_errlog_size = trim(file_exists("/var/lib/memtester/errlog") ? htmlspecialchars(mem_humanFileSize(filesize("/var/lib/memtester/errlog"))) : "");
-            $mem_total = trim(htmlspecialchars(mem_humanFileSize(shell_exec("awk '/MemTotal/ { print $2*1000 }' /proc/meminfo 2>/dev/null") ?? "", 0)));
-            $mem_free = trim(htmlspecialchars(mem_humanFileSize(shell_exec("awk '/MemFree/ { print $2*1000 }' /proc/meminfo 2>/dev/null") ?? "")));
+            $mem_total = trim(htmlspecialchars(mem_humanFileSize(shell_exec("free -b 2>/dev/null | awk '/Mem:/ {print $2}' 2>/dev/null") ?? "", 0)));
+            $mem_free = trim(htmlspecialchars(mem_humanFileSize(shell_exec("free -b 2>/dev/null | awk '/Mem:/ {print $7}' 2>/dev/null") ?? "")));
         }
 
         $mem_disk_util = htmlspecialchars(trim(shell_exec("df --output=pcent /var/lib/memtester 2>/dev/null | tr -dc '0-9' 2>/dev/null") ?? ""));
