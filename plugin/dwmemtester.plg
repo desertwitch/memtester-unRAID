@@ -3,14 +3,14 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "dwmemtester">
 <!ENTITY author    "desertwitch">
-<!ENTITY version   "2024.10.07">
+<!ENTITY version   "2024.10.07a">
 <!ENTITY launch    "Settings/dwmemtesterOps">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/&author;/memtester-unRAID/main">
 <!ENTITY pluginURL "&gitURL;/plugin/&name;.plg">
 <!ENTITY pkgURL    "&gitURL;/packages">
 <!ENTITY plgPATH   "/boot/config/plugins/&name;">
-<!ENTITY plgNAME   "dwmemtester-2024.10.07-x86_64-1">
-<!ENTITY plgMD5    "040ab531ea1cc8d03c6f583670c971ea">
+<!ENTITY plgNAME   "dwmemtester-2024.10.07-x86_64-2">
+<!ENTITY plgMD5    "9247665d3c5c8859655e7ef8ce8b1074">
 <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
 
@@ -18,7 +18,7 @@
 
 <CHANGES>
 ## Live Memory Tester for UNRAID
-###2024.10.07
+###2024.10.07a
 - fix: show available (allocatable) RAM instead of only completely unused (free) RAM in GUI
 ###2024.09.16
 - fix: reworked bash scripts to better standards with more safety for strange configurational states
