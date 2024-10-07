@@ -21,15 +21,24 @@ function mem_humanFileSize($sizeObj,$decs=2,$unit="") {
     try {
         $size = intval($sizeObj);
         if($size) {
-            if( (!$unit && $size >= 1000000000000) || $unit == "TB")
-                return number_format(($size/1000000000000),$decs) . " TB";
-            if( (!$unit && $size >= 1000000000) || $unit == "GB")
-                return number_format(($size/1000000000),$decs) . " GB";
-            if( (!$unit && $size >= 1000000) || $unit == "MB")
-                return number_format(($size/1000000),$decs) . " MB";
-            if( (!$unit && $size >= 1000) || $unit == "KB")
-                return number_format(($size/1000),$decs) . " KB";
-            return number_format($size) . " B";
+            // if( (!$unit && $size >= 1000000000000) || $unit == "TB")
+            //     return number_format(($size/1000000000000),$decs) . " TB";
+            // if( (!$unit && $size >= 1000000000) || $unit == "GB")
+            //     return number_format(($size/1000000000),$decs) . " GB";
+            // if( (!$unit && $size >= 1000000) || $unit == "MB")
+            //     return number_format(($size/1000000),$decs) . " MB";
+            // if( (!$unit && $size >= 1000) || $unit == "KB")
+            //     return number_format(($size/1000),$decs) . " KB";
+            // return number_format($size) . " B";
+            if( (!$unit && $size >= 1<<40) || $unit == "TiB")
+                return number_format($size/(1<<40),$decs)." TiB";
+            if( (!$unit && $size >= 1<<30) || $unit == "GiB")
+                return number_format($size/(1<<30),$decs)." GiB";
+            if( (!$unit && $size >= 1<<20) || $unit == "MiB")
+                return number_format($size/(1<<20),$decs)." MiB";
+            if( (!$unit && $size >= 1<<10) || $unit == "KiB")
+                return number_format($size/(1<<10),$decs)." KiB";
+            return number_format($size)." B";
         } else {
             return false;
         }
