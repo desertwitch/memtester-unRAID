@@ -18,6 +18,8 @@
 
 <CHANGES>
 ## Live Memory Tester for UNRAID
+###2025.02.26
+- fix: future-proofing changes to base plugin structure
 ###2024.10.07a
 - fix: show available (allocatable) RAM instead of only completely unused (free) RAM in GUI
 ###2024.09.16
@@ -77,7 +79,6 @@ run the post-installation scripts
 -->
 <FILE Run="/bin/bash">
 <INLINE>
-/etc/cron.daily/memtester-poller conntest >/dev/null 2>&amp;1 &amp;
 echo ""
 echo "-----------------------------------------------------------"
 echo " Live Memory Tester for UNRAID has been installed."

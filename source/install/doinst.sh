@@ -15,14 +15,9 @@
 # The above copyright notice and this permission notice shall be
 # included in all copies or substantial portions of the Software.
 #
-BOOT="/boot/config/plugins/dwmemtester"
-DOCROOT="/usr/local/emhttp/plugins/dwmemtester"
-
 chmod 755 /usr/local/emhttp/plugins/dwmemtester/scripts/*
 chmod 755 /usr/bin/memtester
 chmod 755 /usr/bin/memtester-runner
-
-cp -n $DOCROOT/default.cfg $BOOT/dwmemtester.cfg >/dev/null 2>&1
 
 if ! mountpoint -q /var/lib/memtester; then
     rm -rf /var/lib/memtester
@@ -35,7 +30,5 @@ fi
 chown root:root /var/lib/memtester
 chmod 755 /var/lib/memtester
 
-# set up plugin-specific polling tasks
+# remove (legacy) plugin-specific polling tasks
 rm -f /etc/cron.daily/memtester-poller >/dev/null 2>&1
-ln -sf /usr/local/emhttp/plugins/dwmemtester/scripts/poller /etc/cron.daily/memtester-poller >/dev/null 2>&1
-chmod +x /etc/cron.daily/memtester-poller >/dev/null 2>&1
