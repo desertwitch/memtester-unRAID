@@ -64,7 +64,7 @@ function getMemFooter() {
 }
 $(function()
 {
-    var mem_footer = $("<span id='memtest_footer'><i class='fa fa-microchip'></i><strong> Memory Testing in Progress<span class='memfooterramwarning memfootertip' style='display:none' title='It is recommended to stop the running memory test and to clear the logs. In case of too many errors being recorded, you can disable writing the detailed error output (for just the testing summaries) next time.'> / <i class='fa fa-exclamation-triangle'></i> RAM Disk Utilization > 90%</span></strong></span>").insertAfter("div#footer > span#copyright");
+    var mem_footer = $("<span id='memtest_footer'><i class='fa fa-microchip'></i><strong> Memory Testing in Progress<span class='memfooterramwarning memfootertip' style='display:none' title='It is recommended to stop the running memory test and to clear the logs. In case of too many errors being recorded, you can disable writing the detailed error output (for just the testing summaries) next time.'> / <i class='fa fa-exclamation-triangle'></i> RAM Disk Utilization > 90%</span></strong></span>").insertAfter("#footer > span#copyright");
     getMemFooter();
 });
 </script>
